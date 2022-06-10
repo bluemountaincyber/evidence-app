@@ -1,0 +1,41 @@
+html {
+    min-height: 100%;
+}
+
+body {
+    background: linear-gradient(#ff9900, #ffffff);
+    font-family: Verdana;
+    font-size: 16px;
+}
+
+h1 {
+    color: #ffffff;
+    text-shadow: 2px 2px #000000;
+    font-size: 25px;
+}
+
+table {
+    border: 1px solid black;
+}
+
+td {
+    border: 1px solid black;
+}
+
+input {
+    font-family: Verdana;
+    font-size: 16px;
+}
+
+#submitButton {
+    background-color: #0b690e;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
