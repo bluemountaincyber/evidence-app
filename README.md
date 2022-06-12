@@ -46,4 +46,4 @@ This serverless web application is used by Sherlock's blue team to import eviden
 
     - Upon upload the file will be stored in an Amazon S3 bucket in your account which begins with the prefix **evidence-**.
 
-    - The metadata (file name, MD5 hash, and SHA1 hash) is generated and stored in an AWS DynamoDB table called **evidence**.
+    - The metadata (file name, MD5 hash, and SHA1 hash) is generated and stored in an Amazon DynamoDB table called **evidence**.
