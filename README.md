@@ -31,7 +31,7 @@ This serverless web application is used by Sherlock's blue team to import eviden
 
     ```bash
     terraform init
-    terraform apply # Answer 'y' when prompted
+    terraform apply # Answer 'yes' when prompted
     ```
 
 ## Using the Application
