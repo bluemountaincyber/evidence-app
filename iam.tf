@@ -106,3 +106,58 @@ resource "aws_s3_bucket_policy" "aws-logs_policy" {
     ]
   })
 }
+
+resource "aws_iam_policy" "cloudtrail_cloudwatch" {
+  name        = "CloudTrailCloudWatchWrite"
+  path        = "/"
+  description = "CloudTrail write to CloudWatch policy"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+        {
+            Sid = "AWSCloudTrailCreateLogStream"
+            Effect = "Allow"
+            Action = [
+                "logs:CreateLogStream"
+            ]
+            Resource = [
+                "${aws_cloudwatch_log_group.cloudtrail.arn}:*:*"
+            ]
+        },
+        {
+            Sid = "AWSCloudTrailPutLogEvents"
+            Effect = "Allow"
+            Action = [
+                "logs:PutLogEvents"
+            ]
+            Resource = [
+                "${aws_cloudwatch_log_group.cloudtrail.arn}:*:*"
+            ]
+        }
+    ]
+  })
+}
+
+resource "aws_iam_role" "cloudtrail_cloudwatch" {
+  name = "CloudtrailCloudWatchRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "cloudtrail.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "cloudtrail" {
+  role       = aws_iam_role.cloudtrail_cloudwatch.name
+  policy_arn = aws_iam_policy.cloudtrail_cloudwatch.arn
+}

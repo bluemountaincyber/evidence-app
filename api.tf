@@ -144,3 +144,16 @@ resource "aws_cloudwatch_log_group" "api_gw" {
   name              = "/aws/api_gw/${aws_apigatewayv2_api.evidence_gw.name}"
   retention_in_days = 1
 }
+
+resource "aws_cloudwatch_log_group" "cloudtrail" {
+  name              = "cloudtrail-${random_string.s3_suffix.result}"
+  retention_in_days = 1
+}
+
+resource "aws_cloudtrail" "trail" {
+  name = "cloudtrail-${random_string.s3_suffix.result}"
+  s3_bucket_name = aws_s3_bucket.cloudtrail_logs.id
+  is_multi_region_trail = true
+  cloud_watch_logs_group_arn = "${aws_cloudwatch_log_group.cloudtrail.arn}:*"
+  cloud_watch_logs_role_arn = aws_iam_role.cloudtrail_cloudwatch.arn
+}
