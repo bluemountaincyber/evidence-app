@@ -10,6 +10,11 @@ data "archive_file" "evidence_lambda_zip" {
   output_path = "${path.module}/evidence.zip"
 }
 
+resource "time_sleep" "wait_15_seconds" {
+  depends_on = [data.archive_file.evidence_lambda_zip]
+  create_duration = "15s"
+}
+
 resource "aws_lambda_function" "evidence" {
   filename      = "${path.module}/evidence.zip"
   function_name = "evidence"
@@ -17,6 +22,7 @@ resource "aws_lambda_function" "evidence" {
   handler       = "evidence.lambda_handler"
   runtime       = "python3.8"
   publish       = true
+  depends_on    = [time_sleep.wait_15_seconds]
 }
 
 resource "aws_cloudwatch_log_group" "lambda" {
