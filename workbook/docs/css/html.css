@@ -1,0 +1,194 @@
+:root {
+    --sans-primary-color: #005f86;
+    --sans-secondary-color: #0092bc;
+    --sans-primary-text-color: #ffffff;
+    --sans-secondary-text-color: #eeeeee;
+  
+    /* keyboard icon for "cmd" admonishment */
+    --md-admonition-icon--cmd: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M19,10H17V8H19M19,13H17V11H19M16,10H14V8H16M16,13H14V11H16M16,17H8V15H16M7,10H5V8H7M7,13H5V11H7M8,11H10V13H8M8,8H10V10H8M11,11H13V13H11M11,8H13V10H11M20,5H4C2.89,5 2,5.89 2,7V17A2,2 0 0,0 4,19H20A2,2 0 0,0 22,17V7C22,5.89 21.1,5 20,5Z" /></svg>');
+  }
+  
+  @media not print {
+    html {
+      font-size: 14.5pt;
+    }
+  }
+  
+  .md-header {
+    color: var(--sans-primary-text-color);
+    background-color: var(--sans-primary-color);
+  }
+  .md-header__title {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .md-tabs {
+    background-color: var(--sans-secondary-color);
+    color: var(--sans-secondary-text-color);
+    font-weight: bold;
+  }
+  .md-tabs__link--active {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  .md-grid {
+    max-width: 80%;
+  }
+  
+  h1 {
+    color: white;
+    background-color: var(--sans-primary-color);
+    font-style: italic;
+    text-align: center;
+    padding-top: 3px;
+    padding-bottom: 5px;
+  }
+  
+  .md-typeset a {
+    text-decoration: underline;
+  }
+  
+  .md-typeset h1 {
+    color: var(--sans-primary-text-color);
+    font-weight: bold;
+  }
+  .md-typeset h1 code {
+    color: var(--sans-primary-text-color);
+    background-color: var(--sans-primary-color);
+  }
+  
+  .md-search__inner {
+    color: black;
+    background-color: white;
+  }
+  
+  h2 {
+    color: var(--sans-secondary-text-color);
+    background-color: var(--sans-secondary-color);
+    padding-left: 5px;
+    padding-top: 2px;
+    padding-bottom: 3px;
+  }
+  
+  .md-typeset h2 {
+    font-size: 110%;
+    font-weight: bolder;
+  }
+  
+  .md-typeset h2 code {
+    color: var(--sans-secondary-text-color);
+    background-color: var(--sans-primary-color);
+  }
+  
+  h3 {
+    color: black;
+    background-color: lightgray;
+    border-color: lightgray;
+    border-style: double;
+    border-width: thick;
+    padding-left: 5px;
+    font-style: italic;
+  }
+  
+  .md-typeset h3 {
+    font-size: 100%;
+  }
+  
+  .md-typeset h3 code {
+    color: black;
+    background-color: lightgray;
+  }
+  
+  /* "code" is for inline code and "codehilite" is for code blocks */
+  code { font-weight: bold; }
+  .codehilite { font-weight: bold; }
+  
+  img {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+  }
+  
+  img.centered {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  img.noborder { border-style: none; }
+  
+  /* To make an image display at a specified width,
+    use the attr_list mkdocs plugin and assign a
+    class to the image itself, e.g. {: class="w400" } */
+  img.w100 { width:100px; }
+  img.w150 { width:150px; }
+  img.w200 { width:200px; }
+  img.w250 { width:250px; }
+  img.w300 { width:300px; }
+  img.w350 { width:350px; }
+  img.w400 { width:400px; }
+  img.w450 { width:450px; }
+  img.w500 { width:500px; }
+  img.w550 { width:550px; }
+  img.w600 { width:600px; }
+  img.w650 { width:650px; }
+  
+  .md-typeset .admonition.cmd,
+  .md-typeset details.cmd {
+    border-color: rgb(0, 191, 165);
+  }
+  .md-typeset .cmd > .admonition-title,
+  .md-typeset .cmd > summary {
+    background-color: rgba(0, 191, 165, 0.1);
+    border-color: rgb(0, 191, 165);
+  }
+  .md-typeset :is(.admonition.cmd, details.cmd) {
+    border-color: rgb(0, 191, 165);
+  }
+  .md-typeset .cmd > .admonition-title::before,
+  .md-typeset .cmd > summary::before {
+    background-color: rgb(0, 191, 165);
+    -webkit-mask-image: var(--md-admonition-icon--cmd);
+            mask-image: var(--md-admonition-icon--cmd);
+  }
+  
+  .md-typeset .admonition-title {
+    border-left-width: 0px !important;
+  }
+  
+  /* remove the "copy to clipboard" icon an feature on "summary" admonition
+     boxes, which are consistently and only used for command line results */
+  .summary .md-clipboard {
+    visibility: hidden;
+  }
+  
+  blockquote {
+    background-color: #f5f5f5;
+  }
+  
+  .md-typeset blockquote {
+    color: black;
+    font-size: 90%;
+  }
+  
+  /* Provides a means of centering a paragraph of text.  To use, place the following below the text paragraph:
+     {: class="centered" }
+     */
+  .centered {
+    text-align: center;
+  }
+  
+  /* This overlays a "zoom in" icon for all class="zoom" anchor elements. */
+  a.zoom { position: relative; }
+  a.zoom::after {
+    height: 24px;
+    width: 24px;
+    content: "";
+    position: absolute;
+    bottom:11px;
+    right:5px;
+    display: block;
+    background-image: url(/img/magnify.png);
+    background-repeat: no-repeat;
+    opacity: 75%;
+  }

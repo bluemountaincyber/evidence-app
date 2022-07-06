@@ -1,0 +1,73 @@
+extra:
+  template_version: 2.0.3
+
+theme:
+  name: "material"
+  font:
+    text: "Roboto"
+    code: "Source Code Pro"
+  palette:
+    primary: "white"
+    accent: "indigo"
+  # option 1: internal icons
+  icon:
+    logo: "material/home-variant"
+
+  # use https://favicon.io/favicon-converter/ for this
+  favicon: "img/favicon.ico"
+  features:
+    - navigation.instant
+    - navigation.tabs
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - codehilite:
+      guess_lang: false
+  - footnotes
+  - toc:
+      permalink: false
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+      clickable_checkbox: true
+  - pymdownx.tilde
+
+plugins:
+  - search
+  - exclude:
+      glob:
+        - lab-template.md
+  - pdf-export:
+      verbose: false
+      media_type: print
+      combined: true
+      enabled_if_env: ENABLE_PDF_EXPORT
+
+extra_css:
+  - css/html.css
+  - css/custom.css
+  - css/jquery.fancybox.min.css
+  - css/custom.css
+
+extra_javascript:
+  - js/jquery.min.js
+  - js/jquery.fancybox.min.js
+  - js/workbook.js

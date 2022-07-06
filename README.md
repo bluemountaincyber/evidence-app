@@ -36,7 +36,7 @@ This serverless web application is used by Sherlock's blue team to import eviden
 
 ## Using the Application
 
-1. Navigate to the URL shown in your terminal at the end of the deployment (e.g., https://d16krrq07nhrmy.cloudfront.net).
+1. Navigate to the URL shown in your terminal at the end of the deployment (e.g., `https://d16krrq07nhrmy.cloudfront.net`).
 
 2. When you arrive, you will find a table containing a sample evidence file name (`EICAR.txt`), MD5 hash (`44d88612fea8a8f36de82e1278abb02f`), and SHA1 hash (`3395856ce81f2b7382dee72602f798b642f14140`).
 

@@ -1,0 +1,20 @@
+site_name: 'Attacking and Defending Serverless Applications'
+copyright: '©2022 Ryan Nicholson'
+site_description: 'Attacking and Defending Serverless Applications'
+site_author: 'Ryan Nicholson'
+extra:
+  version: '2022-07-06'
+
+INHERIT: ./base_config.yml
+
+nav:
+  - Home: 'index.md'
+  - Labs:
+    - 'Exercise 1: Deploying the Serverless Application': 'exercises/exercise1.md'
+    - 'Exercise 2: Reconnaissance of Evidence-App': 'exercises/exercise2.md'
+    - 'Exercise 3: Discovering Evidence-App Vulnerability': 'exercises/exercise3.md'
+    - 'Exercise 4: Exploiting Evidence-App and Pivoting to Cloud Account': 'exercises/exercise4.md'
+    - 'Exercise 5: Identifying Reconnaissance': 'exercises/exercise5.md'
+    - 'Exercise 6: Identifying Vulnerability Discovery': 'exercises/exercise6.md'
+    - 'Exercise 7: Identifying Exploitation and Pivot': 'exercises/exercise7.md'
+    - 'Exercise 8: Tearing Down Serverless Application': 'exercises/exercise8.md'
