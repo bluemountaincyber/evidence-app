@@ -253,7 +253,7 @@ At least for now, let's rule out `jquery.min.js` as a potential target as that i
             }
             ```
 
-    2. If you look closely at the `getEvidence()` and `uploadEvidence()` functions, there are calls to the same URL we saw before, but with a new endpoint: `/api`. 
+    2. If you look closely at the `getEvidence()` and `uploadEvidence()` functions, there are calls to the same URL we saw before, but with a new endpoint: `/api/`. 
     
     3. If you look even closer, you'll see that this new endpoint is connected to with two different HTTP methods: `GET` and `POST`. Here is a command to help see this more clearly:
 

@@ -64,7 +64,7 @@ Instead of simply uploading another file, enable Developer tools in your web bro
 
         ![](../img/exercise2/5.png ""){: class="w600" }
 
-    6. In the **Developer Tools** pane, you should see two requests to `/api/`. The first is the `POST` request (the file upload) and the second is the `GET` request (refreshing the table on the web page). Click on the first request to `/api` (1) and then, when a new pane opens, click on **Payload** (2).
+    6. In the **Developer Tools** pane, you should see two requests to `/api/`. The first is the `POST` request (the file upload) and the second is the `GET` request (refreshing the table on the web page). Click on the first request to `/api/` (1) and then, when a new pane opens, click on **Payload** (2).
 
         ![](../img/exercise3/3.png ""){: class="w600" }
 
