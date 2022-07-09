@@ -33,7 +33,7 @@ Upload any file from your local system you wish, but keep it small as large file
 
         ```bash
         cd /home/cloudshell-user/evidence-app
-        terraform show
+        terraform output
         ```
 
         !!! summary "Expected Result"
