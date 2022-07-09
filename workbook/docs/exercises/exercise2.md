@@ -165,10 +165,10 @@ Built into **CloudShell** is a tool that can do just that - `wget`. It's not fan
             Downloaded: 1 files, 935 in 0s (216 MB/s)
             ```
 
-    5. That is quite noisy. We just want the files referenced. You can use `grep` to extract those newly discovered URLs:
+    5. That is quite noisy. We just want the files referenced. You can use `egrep` to extract those newly discovered URLs:
 
         ```bash
-        grep https /tmp/wget.log
+        egrep "http(s)?" /tmp/wget.log
         ```
 
         !!! summary "Expected Results"
