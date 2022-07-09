@@ -13,7 +13,7 @@
 
 ### Challenge 1: Launch AWS CloudShell
 
-The exercises performed in this workshop are designed to simply use your web browser - no additional tools (e.g., virtual machines, SSH clients) required! Many cloud vendors allow customers to generate a shell session in a vendor-managed container/VM to perform basic tasks. We will use this to our advantaget to deploy, test, and analyze an application called evidence-app.
+The exercises performed in this workshop are designed to simply use your web browser - no additional tools (e.g., virtual machines, SSH clients) required! Many cloud vendors allow customers to generate a shell session in a vendor-managed container/VM to perform basic tasks. We will use this to our advantaget to deploy, test, and analyze an application called **evidence-app**.
 
 Begin by logging into your AWS account and launch a **CloudShell** session  in the **N. Virginia (us-east-1)** region.
 
