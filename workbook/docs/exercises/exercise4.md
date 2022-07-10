@@ -104,7 +104,7 @@ Now that you are armed with credentials, see which account you compromised, get 
 
         !!! summary "Solution"
 
-            ```bash
+            ```bash hl_lines="4"
             {
                 "UserId": "AROATAI5Z633T7ULOW742:evidence",
                 "Account": "012345678910",
@@ -146,7 +146,7 @@ Now that you are armed with credentials, see which account you compromised, get 
 
         !!! summary "Solution"
 
-            ```bash
+            ```bash hl_lines="3 4"
             2022-07-10 14:34:30 aws-logs-ev6hyhqiwb0duypb
             2022-07-10 14:34:30 cloudtrail-ev6hyhqiwb0duypb
             2022-07-10 14:34:30 evidence-ev6hyhqiwb0duypb

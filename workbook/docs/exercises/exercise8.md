@@ -25,9 +25,23 @@ Log back into your **CloudShell** session and use `terraform` to destroy the **e
         !!! summary "Expected Results"
 
             ```bash
-<snip>
+            <snip>
 
+            aws_cloudfront_origin_access_identity.evidence-oai: Destruction complete after 1s
+            aws_s3_bucket.aws-logs: Destruction complete after 1s
+            random_string.s3_suffix: Destroying... [id=pbk4g30a3h7nghii]
+            random_string.s3_suffix: Destruction complete after 0s
+            aws_apigatewayv2_api.evidence_gw: Destruction complete after 1s
 
+            Destroy complete! Resources: 37 destroyed.
             ```
 
 ### Challenge 2: (Optional) Reset CloudShell Home Directory
+
+Delete the contents of your **CloudShell** home directory.
+
+??? cmd "Solution"
+
+    1. In your **CloudShell session**, click on the **Actions** dropdown (1) and choose **Delete AWS CloudShell home directory** (2).
+
+        ![](../img/exercise8/1.png ""){: class="w300" }

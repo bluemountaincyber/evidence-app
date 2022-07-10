@@ -198,7 +198,7 @@ At least for now, let's rule out `jquery.min.js` as a potential target as that i
 
         !!! summary "Expected Result"
 
-            ```bash
+            ```bash hl_lines="1 3 4 24 31 32"
             function getEvidence() {
               $.ajax({
                 url: "https://d1dw3pytnie47k.cloudfront.net/api/",
@@ -319,7 +319,7 @@ Since we know that the `POST` method likely requires data, we will work with thi
 
         !!! summary
 
-            ```bash
+            ```bash hl_lines="6"
             HTTP/2 200 
             content-type: text/html
             content-length: 935
@@ -344,7 +344,7 @@ Since we know that the `POST` method likely requires data, we will work with thi
 
         !!! summary "Expected Result"
 
-            ```bash
+            ```bash hl_lines="5"
             HTTP/2 403 
             content-type: text/plain; charset=utf-8
             content-length: 30
