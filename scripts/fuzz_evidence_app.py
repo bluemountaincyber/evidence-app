@@ -38,7 +38,7 @@ def check_response(file_name, target):
     Check result of uploaded file_name.
     """
     response = requests.get(target)
-    json_data = json.loads(response.text.replace("'", '"'))
+    json_data = json.loads(response.text.replace('"', '\\"').replace("'", '"'))
     for item in json_data['Items']:
         if item['FileName']['S'] == file_name and item['MD5Sum']['S'] != "d8e8fca2dc0f896fd7cb4cb0031ba249":
             return True
