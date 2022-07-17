@@ -7,3 +7,4 @@ terraform.tfstate.*backup
 evidence.zip
 workbook/.venv
 .DS_Store
+settings.json

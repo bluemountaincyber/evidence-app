@@ -118,13 +118,8 @@ resource "aws_s3_bucket" "evidence" {
   force_destroy = true
 }
 
-resource "aws_s3_bucket" "cloudtrail_logs" {
-  bucket        = "cloudtrail-${random_string.s3_suffix.result}"
-  force_destroy = true
-}
-
 resource "aws_s3_bucket_policy" "cloudtrail_logs" {
-  bucket = aws_s3_bucket.cloudtrail_logs.id
+  bucket = aws_s3_bucket.aws-logs.id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

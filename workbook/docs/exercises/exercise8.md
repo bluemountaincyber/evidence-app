@@ -45,3 +45,9 @@ Delete the contents of your **CloudShell** home directory.
     1. In your **CloudShell session**, click on the **Actions** dropdown (1) and choose **Delete AWS CloudShell home directory** (2).
 
         ![](../img/exercise8/1.png ""){: class="w300" }
+
+    2. When prompted, type `delete` in the text field (1) and click on the **Delete** button (2).
+
+        ![](../img/exercise8/2.png ""){: class="w500" }
+
+    3. Your **CloudShell** session should restart and your home directory will be set to default.

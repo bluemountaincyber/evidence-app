@@ -13,7 +13,7 @@
 
 ### Challenge 1: Launch AWS CloudShell
 
-The exercises performed in this workshop are designed to simply use your web browser - no additional tools (e.g., virtual machines, SSH clients) required! Many cloud vendors allow customers to generate a shell session in a vendor-managed container/VM to perform basic tasks. We will use this to our advantaget to deploy, test, and analyze an application called **evidence-app**.
+The exercises performed in this workshop are designed to simply use your web browser - no additional tools (e.g., virtual machines, SSH clients) required! Many cloud vendors allow customers to generate a shell session in a vendor-managed container/VM to perform basic tasks. We will use this to our advantage to deploy, test, and analyze an application called **evidence-app**.
 
 Begin by logging into your AWS account and launch a **CloudShell** session  in the **N. Virginia (us-east-1)** region.
 
@@ -149,6 +149,7 @@ Since **CloudShell** does not include `terraform`, download version 1.2.4 of the
     2. Now that you have the compressed Terraform file, extract it and save the contents to `/home/cloudshell-user/.local/bin/` by running the following command:
 
         ```bash
+        mkdir -p /home/cloudshell-user/.local/bin
         unzip -d /home/cloudshell-user/.local/bin/ /home/cloudshell-user/terraform.zip
         ```
 
@@ -165,11 +166,18 @@ Since **CloudShell** does not include `terraform`, download version 1.2.4 of the
         terraform version
         ```
 
+        !!! warning
+
+            You can ignore the "out of date version" message. Since Terraform is updated incredibly frequently, we cannot be certain the latest version will work properly to deploy your resources. This exercise was tested with Terraform version 1.2.4.
+
         !!! summary "Expected Result"
 
             ```bash
             Terraform v1.2.4
             on linux_amd64
+
+            Your version of Terraform is out of date! The latest version
+            is 1.2.5. You can update by downloading from https://www.terraform.io/downloads.html
             ```
 
 ### Challenge 4: Deploy Evidence App
@@ -279,6 +287,6 @@ Use Terraform to initialize and deploy the IaC. Afterwards, navigate to the webs
 
     5. The application that you are looking is described in the source code repository's [README.md](https://github.com/bluemountaincyber/evidence-app/blob/main/README.md) file.
     
-        !!! quote
+        !!! quote "README.md excerpt"
         
             This serverless web application is used by Sherlock's blue team to import evidence data, generate MD5 and SHA1 hashes of the uploaded files, and save the files in a safe location.

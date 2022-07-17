@@ -193,7 +193,7 @@ At least for now, let's rule out `jquery.min.js` as a potential target as that i
     1. To see what's in that file, you can simply use `curl` to the URL ending in `script.js`. Here's a command that also leverages the previously-saved `TARGET` environment variable:
 
         ```bash
-        curl $TARGET/script.js
+        curl -w '\n' $TARGET/script.js
         ```
 
         !!! summary "Expected Result"
@@ -258,7 +258,7 @@ At least for now, let's rule out `jquery.min.js` as a potential target as that i
     3. If you look even closer, you'll see that this new endpoint is connected to with two different HTTP methods: `GET` and `POST`. Here is a command to help see this more clearly:
 
         ```bash
-        curl -s $TARGET/script.js | grep url -A1
+        curl -w '\n' -s $TARGET/script.js | grep url -A1
         ```
 
         !!! summary "Expected Result"
@@ -280,7 +280,7 @@ Now that you found another interesting endpoint, communicate with it to see what
     1. First, let's try a `GET` request to the `/api/` endpoint (Pressing `Enter` after the command returns).
 
         ```bash
-        curl -X GET $TARGET/api/
+        curl -w '\n' -X GET $TARGET/api/
         ```
 
         !!! summary "Expected Result"
@@ -292,7 +292,7 @@ Now that you found another interesting endpoint, communicate with it to see what
     3. Now, let's try a `POST` request to the same endpoint.
 
         ```bash
-        curl -X POST $TARGET/api/
+        curl -w '\n' -X POST $TARGET/api/
         ```
 
         !!! summary "Expected Result"
