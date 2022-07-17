@@ -162,7 +162,7 @@ resource "aws_cloudtrail" "trail" {
 
     data_resource {
       type = "AWS::S3::Object"
-      values = ["${data.aws_s3_bucket.webcode.arn}/"]
+      values = ["${aws_s3_bucket.webcode.arn}/"]
     }
   }
   event_selector {
@@ -171,7 +171,7 @@ resource "aws_cloudtrail" "trail" {
 
     data_resource {
       type = "AWS::S3::Object"
-      values = ["${data.aws_s3_bucket.evidence.arn}/"]
+      values = ["${aws_s3_bucket.evidence.arn}/"]
     }
   }
   depends_on = [aws_s3_bucket_policy.cloudtrail_logs]
