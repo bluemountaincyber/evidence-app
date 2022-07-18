@@ -219,7 +219,7 @@ Now that you know the structure of the log data, extract the following details f
             <snip>
             ```
 
-    3. It appears, in the example shown above, that the IP address of `34.229.160.87` is interacting with the application quite strangely (the IP address you find will be different, but just as suspicious). First, we see a weird User-Agent named `TotallyNotWget`. Of course, a User-Agent does not always indicate malice, but take a look at just how quickly the entries that contain this strange User-Agent are accessing all web pages in the evidence-app? In the above example, all pages are visited within the same second. That is abnormal for a user of this application.
+    3. It appears, in the example shown above, that the IP address of `34.229.160.87` is interacting with the application quite strangely (the IP address you find will be different, but just as suspicious). First, we see a weird User-Agent named `TotallyNotWget`. Of course, a User-Agent does not always indicate malice, but take a look at just how quickly the entries that contain this strange User-Agent requesting HTTP headers from all web pages in the evidence-app? In the above example, all pages are visited within the same second with a `HEAD` request. That is abnormal for a user of this application.
 
     4. Secondly, the user at that same IP address switches to `curl` to communicate with the `script.js` and `/api/` endpoints. This, again is quite odd. Most (if not all) legitimate application users will use a web browser to access the application and upload evidence data.
 
