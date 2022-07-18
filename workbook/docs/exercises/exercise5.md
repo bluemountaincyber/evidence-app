@@ -187,41 +187,51 @@ Now that you know the structure of the log data, extract the following details f
 
     1. Given the above field names as well as the structure determined in the previous challenge, you will be looking for the 1st, 2nd, 5th, 6th, 8th, and 11th tab-delimited fields.
 
-    2. You can grab just these fields using a command like the one shown below:
+    2. You can grab just these fields and output it in a readable format using a command like the one shown below:
 
         ```bash
-        zcat /home/cloudshell-user/cloudfront-logs/*gz | egrep -v "^#" | awk '{print $1","$2","$5","$6","$8","$11}'
+        zcat /home/cloudshell-user/cloudfront-logs/*gz | egrep -v "^#" | awk '{print $1","$2","$5","$6","$8","$11}' | sort -n | column -ts ","
         ```
 
         !!! summary "Sample Results"
 
             ```bash
-            2022-07-17,13:36:35,203.0.113.41,GET,/,Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
-            2022-07-17,13:36:35,203.0.113.41,GET,/styles.css,Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
-            2022-07-17,13:36:35,203.0.113.41,GET,/script.js,Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
-            2022-07-17,13:36:35,203.0.113.41,GET,/Cloud_Ace_Final.png,Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
-            2022-07-17,13:36:35,203.0.113.41,GET,/favicon.ico,Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
-            2022-07-17,13:36:36,203.0.113.41,GET,/api/,Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
-            2022-07-17,13:37:00,203.0.113.41,POST,/api/,Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
-            2022-07-17,13:37:01,203.0.113.41,GET,/api/,Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
-            2022-07-17,13:37:39,34.229.160.87,HEAD,/,TotallyNotWget
-            2022-07-17,13:37:39,34.229.160.87,GET,/,TotallyNotWget
-            2022-07-17,13:37:39,34.229.160.87,HEAD,/styles.css,TotallyNotWget
-            2022-07-17,13:37:39,34.229.160.87,HEAD,/script.js,TotallyNotWget
-            2022-07-17,13:37:39,34.229.160.87,HEAD,/Cloud_Ace_Final.png,TotallyNotWget
-            2022-07-17,13:38:00,34.229.160.87,GET,/script.js,curl/7.79.1
-            2022-07-17,13:38:08,34.229.160.87,GET,/script.js,curl/7.79.1
-            2022-07-17,13:38:15,34.229.160.87,GET,/api/,curl/7.79.1
-            2022-07-17,13:39:34,34.229.160.87,POST,/api/,curl/7.79.1
-            2022-07-17,13:39:43,34.229.160.87,HEAD,/,curl/7.79.1
-            2022-07-17,13:39:49,34.229.160.87,HEAD,/api/,curl/7.79.1
+            2022-07-17  13:36:35  107.3.2.240    GET   /Cloud_Ace_Final.png  Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML  %20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
+            2022-07-17  13:36:35  107.3.2.240    GET   /favicon.ico          Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML  %20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
+            2022-07-17  13:36:35  107.3.2.240    GET   /                     Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML  %20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
+            2022-07-17  13:36:35  107.3.2.240    GET   /script.js            Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML  %20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
+            2022-07-17  13:36:35  107.3.2.240    GET   /styles.css           Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML  %20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
+            2022-07-17  13:36:36  107.3.2.240    GET   /api/                 Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML  %20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
+            2022-07-17  13:37:00  107.3.2.240    POST  /api/                 Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML  %20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
+            2022-07-17  13:37:01  107.3.2.240    GET   /api/                 Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML  %20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
+            2022-07-17  13:37:39  34.229.160.87  GET   /                     TotallyNotWget                                                                             
+            2022-07-17  13:37:39  34.229.160.87  HEAD  /Cloud_Ace_Final.png  TotallyNotWget                                                                             
+            2022-07-17  13:37:39  34.229.160.87  HEAD  /script.js            TotallyNotWget                                                                             
+            2022-07-17  13:37:39  34.229.160.87  HEAD  /styles.css           TotallyNotWget                                                                             
+            2022-07-17  13:37:39  34.229.160.87  HEAD  /                     TotallyNotWget                                                                             
+            2022-07-17  13:38:00  34.229.160.87  GET   /script.js            curl/7.79.1                                                                                
+            2022-07-17  13:38:08  34.229.160.87  GET   /script.js            curl/7.79.1                                                                                
+            2022-07-17  13:38:15  34.229.160.87  GET   /api/                 curl/7.79.1                                                                                
+            2022-07-17  13:39:34  34.229.160.87  POST  /api/                 curl/7.79.1                                                                                
+            2022-07-17  13:39:43  34.229.160.87  HEAD  /                     curl/7.79.1                                                                                
+            2022-07-17  13:39:49  34.229.160.87  HEAD  /api/                 curl/7.79.1                                                                                
+            2022-07-17  13:40:14  107.3.2.240    GET   /styles.css           Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML  %20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
+            2022-07-17  13:40:27  107.3.2.240    POST  /api/                 Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML  %20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
+            2022-07-17  13:40:29  107.3.2.240    GET   /api/                 Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML  %20like%20Gecko)%20Chrome/103.0.0.0%20Safari/537.36
+            2022-07-17  13:41:39  34.229.160.87  POST  /api/                 python-requests/2.25.1                                                                     
+            2022-07-17  13:41:39  34.229.160.87  POST  /api/                 python-requests/2.25.1                                                                     
+            2022-07-17  13:41:40  34.229.160.87  POST  /api/                 python-requests/2.25.1                                                                     
+            2022-07-17  13:41:40  34.229.160.87  POST  /api/                 python-requests/2.25.1                                                                     
+            2022-07-17  13:41:41  34.229.160.87  POST  /api/                 python-requests/2.25.1                                                                     
+            2022-07-17  13:41:42  34.229.160.87  GET   /api/                 python-requests/2.25.1                                                                     
+            2022-07-17  13:41:42  34.229.160.87  POST  /api/                 python-requests/2.25.1
 
             <snip>
             ```
 
     3. It appears, in the example shown above, that the IP address of `34.229.160.87` is interacting with the application quite strangely (the IP address you find will be different, but just as suspicious). First, we see a weird User-Agent named `TotallyNotWget`. Of course, a User-Agent does not always indicate malice, but take a look at just how quickly the entries that contain this strange User-Agent requesting HTTP headers from all web pages in the evidence-app? In the above example, all pages are visited within the same second with a `HEAD` request. That is abnormal for a user of this application.
 
-    4. Secondly, the user at that same IP address switches to `curl` to communicate with the `script.js` and `/api/` endpoints. This, again is quite odd. Most (if not all) legitimate application users will use a web browser to access the application and upload evidence data.
+    4. Secondly, the user at that same IP address switches to `curl` to communicate with the `script.js` and `/api/` endpoints and later to `python-requests/2.25.1`. This, again is quite odd. Most (if not all) legitimate application users will use a web browser to access the application and upload evidence data.
 
     5. This has many signs of possible reconnaissance, but we will learn more about this IP address and its interactions with the application in future exercises. So for now, we can just deem the IP address **suspicious**, but not yet malicious.
     
