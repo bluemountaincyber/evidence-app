@@ -2,7 +2,7 @@
 
 echo -e "\033[32mAcquiring target URL...\033[0m"
 cd /home/cloudshell-user/evidence-app
-TARGET=$(terraform output | cut -d " " -f3)
+TARGET=$(terraform output | cut -d '"' -f2)
 
 echo -e "\033[32mVisiting page like a browser...\033[0m"
 curl $TARGET -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
