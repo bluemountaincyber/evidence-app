@@ -507,6 +507,6 @@ Finally, try to acquire some of the attack payloads used by the suspect IP using
             ```
     5. Since this output appears to be encoded as HTML entities, we can see what the decoded content would be in this case using a tool like [CyberChef](https://gchq.github.io/CyberChef/#recipe=From_HTML_Entity()&input=Jmx0OyEtLSNleGVjJTIwY21kPSZxdW90Oy91c3IvYmluL2lkOy0tJmd0OwombHQ7IS0tI2V4ZWMlMjBjbWQ9JnF1b3Q7L3Vzci9iaW4vaWQ7LS0mZ3Q7CiZsdDshLS0jZXhlYyUyMGNtZD0mcXVvdDsvYmluL2NhdCUyMC9ldGMvc2hhZG93JnF1b3Q7LS0mZ3Q7CiZsdDshLS0jZXhlYyUyMGNtZD0mcXVvdDsvYmluL2NhdCUyMC9ldGMvcGFzc3dkJnF1b3Q7LS0mZ3Q7).
 
-        ![](../img/exercise6/1.png ""){: class="w300" }
+        ![](../img/exercise6/1.png ""){: class="w600" }
 
     6. It looks like these attempts were trying to use HTML comments. Keep in mind, these all failed. So which attempt was successful? Unfortunately, the API gateway logs do not give us insight into the successful submissions. Were there any successful submissions by the attacker after these failed attempts? Stay tuned to see if the attacker continued to be active in this cloud account.
