@@ -41,7 +41,7 @@ As you saw in the last exercise, the suspect IP address was communicating with t
                         "creationTime": 1658146688502,
                         "retentionInDays": 1,
                         "metricFilterCount": 0,
-                        "arn": "arn:aws:logs:us-east-1:206757820151:log-group:/aws/api_gw/evidence_api:*",
+                        "arn": "arn:aws:logs:us-east-1: 012345678910:log-group:/aws/api_gw/evidence_api:*",
                         "storedBytes": 0
                     },
                     {
@@ -49,7 +49,7 @@ As you saw in the last exercise, the suspect IP address was communicating with t
                         "creationTime": 1658146708979,
                         "retentionInDays": 1,
                         "metricFilterCount": 0,
-                        "arn": "arn:aws:logs:us-east-1:206757820151:log-group:/aws/lambda/evidence:*",
+                        "arn": "arn:aws:logs:us-east-1: 012345678910:log-group:/aws/lambda/evidence:*",
                         "storedBytes": 0
                     },
                     {
@@ -57,7 +57,7 @@ As you saw in the last exercise, the suspect IP address was communicating with t
                         "creationTime": 1658146687965,
                         "retentionInDays": 1,
                         "metricFilterCount": 0,
-                        "arn": "arn:aws:logs:us-east-1:206757820151:log-group:cloudtrail-vmjmgvts6lxfrf22:*",
+                        "arn": "arn:aws:logs:us-east-1: 012345678910:log-group:cloudtrail-vmjmgvts6lxfrf22:*",
                         "storedBytes": 0
                     }
                 ]
@@ -86,7 +86,7 @@ As you saw in the last exercise, the suspect IP address was communicating with t
                         "lastEventTimestamp": 1658146688912,
                         "lastIngestionTime": 1658146688916,
                         "uploadSequenceToken": "49039859511763443492676233544510674742969342109675099294",
-                        "arn": "arn:aws:logs:us-east-1:206757820151:log-group:/aws/api_gw/evidence_api:log-stream:log_stream_created_by_aws_to_validate_log_delivery_subscriptions",
+                        "arn": "arn:aws:logs:us-east-1: 012345678910:log-group:/aws/api_gw/evidence_api:log-stream:log_stream_created_by_aws_to_validate_log_delivery_subscriptions",
                         "storedBytes": 0
                     },
                     {
@@ -96,7 +96,7 @@ As you saw in the last exercise, the suspect IP address was communicating with t
                         "lastEventTimestamp": 1658147619982,
                         "lastIngestionTime": 1658147639124,
                         "uploadSequenceToken": "49039859511764706535751652337852435779136233393628453130",
-                        "arn": "arn:aws:logs:us-east-1:206757820151:log-group:/aws/api_gw/evidence_api:log-stream:r0mx7qm4bi_api-2022-07-18-12-33",
+                        "arn": "arn:aws:logs:us-east-1: 012345678910:log-group:/aws/api_gw/evidence_api:log-stream:r0mx7qm4bi_api-2022-07-18-12-33",
                         "storedBytes": 0
                     },
                     {
@@ -106,7 +106,7 @@ As you saw in the last exercise, the suspect IP address was communicating with t
                         "lastEventTimestamp": 1658147671195,
                         "lastIngestionTime": 1658147704482,
                         "uploadSequenceToken": "49039859511764793411435000848384057422330731216904803152",
-                        "arn": "arn:aws:logs:us-east-1:206757820151:log-group:/aws/api_gw/evidence_api:log-stream:r0mx7qm4bi_api-2022-07-18-12-34",
+                        "arn": "arn:aws:logs:us-east-1: 012345678910:log-group:/aws/api_gw/evidence_api:log-stream:r0mx7qm4bi_api-2022-07-18-12-34",
                         "storedBytes": 0
                     }
                 ]
@@ -510,3 +510,12 @@ Finally, try to acquire some of the attack payloads used by the suspect IP using
         ![](../img/exercise6/1.png ""){: class="w600" }
 
     6. It looks like these attempts were trying to use HTML comments. Keep in mind, these all failed. So which attempt was successful? Unfortunately, the API gateway logs do not give us insight into the successful submissions. Were there any successful submissions by the attacker after these failed attempts? Stay tuned to see if the attacker continued to be active in this cloud account.
+
+## ATT&CK
+
+MITRE ATT&CK techniques potentially detected:
+
+| Tactic         | Technique                                                 | Description |
+|:---------------|:----------------------------------------------------------|:------------|
+| Initial Access | Exploit Public-Facing Application (T1190)                 | Found potential fuzzing based upon `file_name` values         |
+| Execution      | Command and Scripting Interpreter: Unix Shell (T1059.003) | Found remote code execution evidence (but was it successful?) |

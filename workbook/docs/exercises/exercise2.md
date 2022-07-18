@@ -336,7 +336,7 @@ Since we know that the `POST` method likely requires data, we will work with thi
 
     3. Notice the `server` header that is returned. It appears that the resource type forwarded to by CloudFront is **Amazon S3**. This is quite common as static files can be placed in S3 and served to a client - removing the need for a web server entirely. But what about dynamic (server-side) code? This would normally require a web server of some kind (e.g., PHP, NodeJS, etc). This can be replaced and done in a serverless fashion using Lambda functions instead.
     
-    4. It may make you wonder if `/api/` is used for dyanmic code since it is referenced by the JavaScript functions we saw earlier (`getEvidence()` and `uploadEvidence()`). Issue a `HEAD` request to the `/api/` endpoint by running the following `curl` command to see which resource type may be involved here:
+    4. It may make you wonder if `/api/` is used for dynamic code since it is referenced by the JavaScript functions we saw earlier (`getEvidence()` and `uploadEvidence()`). Issue a `HEAD` request to the `/api/` endpoint by running the following `curl` command to see which resource type may be involved here:
 
         ```bash
         curl --head $TARGET/api/

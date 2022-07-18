@@ -311,6 +311,6 @@ MITRE ATT&CK techniques performed:
 
 | Tactic            | Technique                                   | Description |
 |:------------------|:--------------------------------------------|:------------|
-| Credential Access | Unsecured Credentials (T1552)               | Stole credentials from AWS Lambda                   |
-| Impact            | Data Destruction (T1485)                    | Used `fuzz_evidence_app.py` to fuzz the application |
-| Impact            | Defacement: External Defacement (T1491.002) | Defaced evidence-app homepage                       |
+| Credential Access | Unsecured Credentials (T1552)               | Stole credentials from AWS Lambda                      |
+| Impact            | Data Destruction (T1485)                    | Destroyed content in `evidence-*` bucket using AWS CLI |
+| Impact            | Defacement: External Defacement (T1491.002) | Defaced evidence-app homepage using AWS CLI            |
