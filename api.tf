@@ -1,5 +1,5 @@
 locals {
-  s3_origin_id = "EVIDENCEORIGIN"
+  s3_origin_id    = "EVIDENCEORIGIN"
   apigw_origin_id = "EVIDENCEAPIORIGIN"
 }
 
@@ -25,7 +25,7 @@ resource "aws_cloudfront_distribution" "evidence-distribution" {
 
   origin {
     domain_name = replace(aws_apigatewayv2_api.evidence_gw.api_endpoint, "/^https?://([^/]*).*/", "$1")
-	  origin_id   = local.apigw_origin_id
+    origin_id   = local.apigw_origin_id
 
     custom_origin_config {
       http_port              = 80
@@ -41,10 +41,10 @@ resource "aws_cloudfront_distribution" "evidence-distribution" {
   default_root_object = "index.html"
 
   ordered_cache_behavior {
-    path_pattern = "/api/*"
-    allowed_methods = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
+    path_pattern     = "/api/*"
+    allowed_methods  = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
     cached_methods   = ["GET", "OPTIONS", "HEAD"]
-    compress = false
+    compress         = false
     target_origin_id = local.apigw_origin_id
     forwarded_values {
       query_string = true
@@ -87,8 +87,8 @@ resource "aws_cloudfront_distribution" "evidence-distribution" {
   }
 
   logging_config {
-      bucket = aws_s3_bucket.aws-logs.bucket_domain_name
-      prefix = "CloudFront/"
+    bucket = aws_s3_bucket.aws-logs.bucket_domain_name
+    prefix = "CloudFront/"
   }
 
   depends_on = [aws_s3_bucket_policy.aws-logs_policy]
@@ -150,22 +150,23 @@ resource "aws_cloudwatch_log_group" "cloudtrail" {
   retention_in_days = 1
 }
 
-resource "time_sleep" "wait_15_seconds" {
+resource "time_sleep" "wait_15_seconds_api" {
+  depends_on      = [aws_iam_role_policy_attachment.cloudtrail]
   create_duration = "15s"
 }
 
 resource "aws_cloudtrail" "trail" {
-  name = "cloudtrail-${random_string.s3_suffix.result}"
-  s3_bucket_name = aws_s3_bucket.aws-logs.id
-  is_multi_region_trail = true
+  name                       = "cloudtrail-${random_string.s3_suffix.result}"
+  s3_bucket_name             = aws_s3_bucket.aws-logs.id
+  is_multi_region_trail      = true
   cloud_watch_logs_group_arn = "${aws_cloudwatch_log_group.cloudtrail.arn}:*"
-  cloud_watch_logs_role_arn = aws_iam_role.cloudtrail_cloudwatch.arn
+  cloud_watch_logs_role_arn  = aws_iam_role.cloudtrail_cloudwatch.arn
   event_selector {
     read_write_type           = "All"
     include_management_events = true
 
     data_resource {
-      type = "AWS::S3::Object"
+      type   = "AWS::S3::Object"
       values = ["${aws_s3_bucket.webcode.arn}/"]
     }
   }
@@ -174,9 +175,9 @@ resource "aws_cloudtrail" "trail" {
     include_management_events = true
 
     data_resource {
-      type = "AWS::S3::Object"
+      type   = "AWS::S3::Object"
       values = ["${aws_s3_bucket.evidence.arn}/"]
     }
   }
-  depends_on = [time_sleep.wait_15_seconds]
+  depends_on = [time_sleep.wait_15_seconds_api]
 }

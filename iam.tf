@@ -76,17 +76,17 @@ resource "aws_lambda_permission" "api_gw" {
 resource "aws_s3_bucket_policy" "webcode_policy" {
   bucket = aws_s3_bucket.webcode.id
   policy = jsonencode({
-    Version =  "2012-10-17"
+    Version = "2012-10-17"
     Statement = [
       {
-        Sid = "PublicReadGetObject"
-        Effect = "Allow"
-        Principal = { "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${aws_cloudfront_origin_access_identity.evidence-oai.id}" }
+        Sid       = "PublicReadGetObject"
+        Effect    = "Allow"
+        Principal = { "AWS" : "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${aws_cloudfront_origin_access_identity.evidence-oai.id}" }
         Action = [
           "s3:GetObject"
         ]
         Resource = "arn:aws:s3:::${aws_s3_bucket.webcode.id}/*"
-            
+
       }
     ]
   })
@@ -98,10 +98,10 @@ resource "aws_s3_bucket_policy" "aws-logs_policy" {
     Version = "2008-10-17"
     Statement = [
       {
-        Effect = "Allow"
-        Principal = { "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${aws_cloudfront_origin_access_identity.evidence-oai.id}" }
-        Action = "s3:*"
-        Resource = "${aws_s3_bucket.aws-logs.arn}/*"
+        Effect    = "Allow"
+        Principal = { "AWS" : "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${aws_cloudfront_origin_access_identity.evidence-oai.id}" }
+        Action    = "s3:*"
+        Resource  = "${aws_s3_bucket.aws-logs.arn}/*"
       }
     ]
   })
@@ -115,26 +115,26 @@ resource "aws_iam_policy" "cloudtrail_cloudwatch" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-        {
-            Sid = "AWSCloudTrailCreateLogStream"
-            Effect = "Allow"
-            Action = [
-                "logs:CreateLogStream"
-            ]
-            Resource = [
-                "${aws_cloudwatch_log_group.cloudtrail.arn}:*:*"
-            ]
-        },
-        {
-            Sid = "AWSCloudTrailPutLogEvents"
-            Effect = "Allow"
-            Action = [
-                "logs:PutLogEvents"
-            ]
-            Resource = [
-                "${aws_cloudwatch_log_group.cloudtrail.arn}:*:*"
-            ]
-        }
+      {
+        Sid    = "AWSCloudTrailCreateLogStream"
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogStream"
+        ]
+        Resource = [
+          "${aws_cloudwatch_log_group.cloudtrail.arn}:*:*"
+        ]
+      },
+      {
+        Sid    = "AWSCloudTrailPutLogEvents"
+        Effect = "Allow"
+        Action = [
+          "logs:PutLogEvents"
+        ]
+        Resource = [
+          "${aws_cloudwatch_log_group.cloudtrail.arn}:*:*"
+        ]
+      }
     ]
   })
 }

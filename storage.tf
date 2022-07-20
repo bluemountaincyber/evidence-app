@@ -62,49 +62,49 @@ resource "aws_s3_bucket_website_configuration" "make_website" {
 
 resource "aws_s3_object" "index_file" {
   bucket = aws_s3_bucket.webcode.id
-  key = "index.html"
-  content = templatefile("${path.module}/webcode/index.html.tpl", 
-  {
-    function_url = "https://${aws_cloudfront_distribution.evidence-distribution.domain_name}/api/"
+  key    = "index.html"
+  content = templatefile("${path.module}/webcode/index.html.tpl",
+    {
+      function_url = "https://${aws_cloudfront_distribution.evidence-distribution.domain_name}/api/"
   })
   content_type = "text/html"
 }
 
 resource "aws_s3_object" "error_file" {
-  bucket = aws_s3_bucket.webcode.id
-  key = "error.html"
-  content = "<h1>Error!</h1>"
+  bucket       = aws_s3_bucket.webcode.id
+  key          = "error.html"
+  content      = "<h1>Error!</h1>"
   content_type = "text/html"
 }
 
 resource "aws_s3_object" "css_file" {
-  bucket = aws_s3_bucket.webcode.id
-  key = "styles.css"
-  source = "${path.module}/webcode/styles.css"
+  bucket       = aws_s3_bucket.webcode.id
+  key          = "styles.css"
+  source       = "${path.module}/webcode/styles.css"
   content_type = "text/css"
 }
 
 resource "aws_s3_object" "js_file" {
   bucket = aws_s3_bucket.webcode.id
-  key = "script.js"
-  content = templatefile("${path.module}/webcode/script.js.tpl", 
-  {
-    function_url = "https://${aws_cloudfront_distribution.evidence-distribution.domain_name}/api/"
+  key    = "script.js"
+  content = templatefile("${path.module}/webcode/script.js.tpl",
+    {
+      function_url = "https://${aws_cloudfront_distribution.evidence-distribution.domain_name}/api/"
   })
   content_type = "text/javascript"
 }
 
 resource "aws_s3_object" "favicon_file" {
-  bucket = aws_s3_bucket.webcode.id
-  key = "favicon.ico"
-  source = "${path.module}/webcode/favicon.ico"
+  bucket       = aws_s3_bucket.webcode.id
+  key          = "favicon.ico"
+  source       = "${path.module}/webcode/favicon.ico"
   content_type = "image/x-icon"
 }
 
 resource "aws_s3_object" "cloudace_file" {
-  bucket = aws_s3_bucket.webcode.id
-  key = "Cloud_Ace_Final.png"
-  source = "${path.module}/webcode/Cloud_Ace_Final.png"
+  bucket       = aws_s3_bucket.webcode.id
+  key          = "Cloud_Ace_Final.png"
+  source       = "${path.module}/webcode/Cloud_Ace_Final.png"
   content_type = "image/png"
 }
 
@@ -123,29 +123,29 @@ resource "aws_s3_bucket_policy" "cloudtrail_logs" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-        {
-            Sid = "AWSCloudTrailAclCheck"
-            Effect = "Allow"
-            Principal = {
-              "Service": "cloudtrail.amazonaws.com"
-            }
-            Action = "s3:GetBucketAcl"
-           Resource = aws_s3_bucket.aws-logs.arn
-        },
-        {
-            Sid = "AWSCloudTrailWrite"
-            Effect = "Allow"
-            Principal = {
-              "Service": "cloudtrail.amazonaws.com"
-            }
-            Action = "s3:PutObject"
-            Resource = "${aws_s3_bucket.aws-logs.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-            Condition = {
-                "StringEquals": {
-                    "s3:x-amz-acl": "bucket-owner-full-control"
-                }
-            }
+      {
+        Sid    = "AWSCloudTrailAclCheck"
+        Effect = "Allow"
+        Principal = {
+          "Service" : "cloudtrail.amazonaws.com"
         }
+        Action   = "s3:GetBucketAcl"
+        Resource = aws_s3_bucket.aws-logs.arn
+      },
+      {
+        Sid    = "AWSCloudTrailWrite"
+        Effect = "Allow"
+        Principal = {
+          "Service" : "cloudtrail.amazonaws.com"
+        }
+        Action   = "s3:PutObject"
+        Resource = "${aws_s3_bucket.aws-logs.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+        Condition = {
+          "StringEquals" : {
+            "s3:x-amz-acl" : "bucket-owner-full-control"
+          }
+        }
+      }
     ]
-})
+  })
 }
