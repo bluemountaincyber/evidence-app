@@ -4,9 +4,16 @@ theme: gaia
 author: Ryan Nicholson
 style: |
   section {
-    background-color: #ff8800;
-    color: #222222;
+    background-image: url('img/background.png');
+    color: #ffffff;
     padding: 30px;
+    --color-background-stripe: #ffffff;
+  }
+  section table tr {
+    border-width: 0px;
+  }
+  section table td {
+    border-width: 0px;
   }
   h1 {
     text-align: center;
@@ -16,15 +23,21 @@ style: |
     text-align: center;
   }
   .author {
-    color: #222222;
+    color: #ffffff;
   }
   .author-info {
-    color: #333333;
+    color: #cccccc;
     font-size: 22px;
   }
   img[alt~="center"] {
     display: block;
     margin: 0 auto;
+  }
+  table {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 34px;
+    border-color: transparent;
   }
 
 ---
@@ -32,7 +45,7 @@ style: |
 
 # Attacking and Defending Serverless Applications Workshop
 
-![height:250px](img/Cloud_Ace_Final.png)
+![height:325px center](img/Cloud_Ace_Final.png)
 
 <p class=author>Ryan Nicholson</p>
 <p class=author-info>SEC488/SEC541 Author and Instructor</p>
@@ -128,7 +141,51 @@ From **AWS CloudShell**:
 
 ---
 
-# MITRE ATT&CK Techniques
+![height:50px center](img/mitre_attack_logo.png)
+
+- _MITRE ATT&CK® is a globally-accessible knowledge base of adversary tactics and techniques based on real-world observations_
+- Tactics include:
+
+<table style="text-align: center;">
+<tr>
+  <td style="background-color: #ff5500;">Reconnaissance</td>
+  <td style="background-color: transparent;">Privilege Escalation</td>
+  <td style="background-color: transparent;">Collection</td>
+</tr>
+<tr>
+  <td style="background-color: transparent;">Resource Development</td>
+  <td style="background-color: transparent;">Defense Evasion</td>
+  <td style="background-color: transparent;">Command and Control</td>
+</tr>
+<tr>
+  <td style="background-color: #ff5500;">Initial Access</td>
+  <td style="background-color: #ff5500;">Credential Access</td>
+  <td style="background-color: transparent;">Exfiltration</td>
+</tr>
+<tr>
+  <td style="background-color: #ff5500;">Execution</td>
+  <td style="background-color: #ff5500;">Discovery</td>
+  <td style="background-color: #ff5500;">Impact</td>
+</tr>
+<tr>
+  <td style="background-color: transparent;">Persistence</td>
+  <td style="background-color: transparent;">Lateral Movement</td>
+  <td style="background-color: transparent;"></td></tr>
+</table>
+
+---
+
+![height:50px center](img/mitre_attack_logo.png)
+
+You will leverage and analyze common ATT&CK techniques
+
+- **Active Scanning (T1595)**
+- **Cloud Infrastructure Discovery (T1580)**
+- **Exploit Public-Facing Application (T1190)**
+- **Command and Scripting Interpreter: Unix Shell (T1059.003)**
+- **Unsecured Credentials (T1552)**
+- **Data Destruction (T1485)**
+- **Defacement: External Defacement (T1491.002)**
 
 ---
 
@@ -140,6 +197,18 @@ From **AWS CloudShell**:
     - [https://github.com/payloadbox/command-injection-payload-list](https://github.com/payloadbox/command-injection-payload-list)
 
 TODO: ADD IMAGE OF TOOL
+
+---
+
+# Attack Sequence
+
+1. Use application as a _normal_ user would
+2. **Spider** web application
+3. **Interact** with and learn more about newly-discovered endpoints
+4. **Fuzz** the application to discover **command injection**
+5. Use **remote code execution** to uncover cloud credentials
+6. **Pivot** to cloud account and perform **discovery**
+7. Be extra evil by **destroying data** and **defacing** the application
 
 ---
 
@@ -155,6 +224,22 @@ TODO: ADD IMAGE OF TOOL
 
 ---
 
+# Investigating the Attack
+
+* **Web interactions** can be found in a few places:
+    * **CloudFront** logs in `aws-logs` S3 bucket
+    * **API Gateway** (requests to `/api`) logs in `/aws/api_gw/evidence_api` CloudWatch log group
+* Server-side execution data (Lambda) found in `/aws/lambda/evidence` CloudWatch log group
+* API calls by stolen credentials found in `aws-logs` S3 bucket
+    * **S3 data events** also enabled and stored here
+* **AWS CLI** and **Linux Kung-Fu** for the win!
+
+---
+
+![height:660px center](img/Evidence_App_Diagram_Logs.png)
+
+---
+
 # Now It's Your Turn!
 
 <br/>
@@ -167,11 +252,24 @@ TODO: ADD IMAGE OF TOOL
 
 ---
 
-# Now It's Your Turn!
+# Conclusion
 
+You did a **LOT** in this workshop by attacking and detecting:
+
+- **Active Scanning (T1595)**
+- **Cloud Infrastructure Discovery (T1580)**
+- **Exploit Public-Facing Application (T1190)**
+- **Command and Scripting Interpreter: Unix Shell (T1059.003)**
+- **Unsecured Credentials (T1552)**
+- **Data Destruction (T1485)**
+- **Defacement: External Defacement (T1491.002)**
+
+---
+
+# Now It's Your Turn!
 
 ## Complete _Exercise 8_ and... you're done!
 
-## Thanks for attending!
+<p style="text-align: center;">Thanks for attending and please feel free to ask any questions!</p>
 
 ![height:300px center](img/Cloud_Ace_Final.png)
