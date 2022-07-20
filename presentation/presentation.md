@@ -8,6 +8,7 @@ style: |
     color: #ffffff;
     padding: 30px;
     --color-background-stripe: #ffffff;
+    --color-highlight: #ffffff;
   }
   section table tr {
     border-width: 0px;
@@ -196,7 +197,7 @@ You will leverage and analyze common ATT&CK techniques
 - Payloads consist of popular command injection payloads
     - [https://github.com/payloadbox/command-injection-payload-list](https://github.com/payloadbox/command-injection-payload-list)
 
-TODO: ADD IMAGE OF TOOL
+![height:145px](img/fuzz_example.png)
 
 ---
 

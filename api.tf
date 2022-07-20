@@ -150,6 +150,10 @@ resource "aws_cloudwatch_log_group" "cloudtrail" {
   retention_in_days = 1
 }
 
+resource "time_sleep" "wait_15_seconds" {
+  create_duration = "15s"
+}
+
 resource "aws_cloudtrail" "trail" {
   name = "cloudtrail-${random_string.s3_suffix.result}"
   s3_bucket_name = aws_s3_bucket.aws-logs.id
@@ -174,5 +178,5 @@ resource "aws_cloudtrail" "trail" {
       values = ["${aws_s3_bucket.evidence.arn}/"]
     }
   }
-  depends_on = [aws_s3_bucket_policy.cloudtrail_logs]
+  depends_on = [time_sleep.wait_15_seconds]
 }
