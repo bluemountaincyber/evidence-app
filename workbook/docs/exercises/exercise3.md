@@ -71,6 +71,47 @@ Instead of simply uploading another file, enable Developer tools in your web bro
 
 ??? cmd "Solution - Firefox"
 
+    1. Go to the browser tab with the evidence-app homepage. Again, if you closed it, you can recover the URL by running the following in your **CloudShell** session:
+
+        ```bash
+        echo $TARGET
+        ```
+
+        !!! summary "Expected Results"
+
+            ```bash
+            https://d1dw3pytnie47k.cloudfront.net
+            ```
+
+    2. Open Web Developer Tools for this tab by either pressing `F12` or clicking on the hamburger button in the top-right of the browser (1), clicking on **More tools** (2), and clicking on **Web Developer Tools** (3).
+
+        ![](../img/exercise3/5.png ""){: class="w250" }
+        ![](../img/exercise3/6.png ""){: class="w250" }
+
+    3. A new pane should open on the bottom of the pane. To prepare for reviewing client and server communication, click on the **Network** tab.
+
+        ![](../img/exercise3/7.png ""){: class="w600" }
+
+    4. Upload another file as you did in **Exercise 2, Challenge 1**. Click on the **Choose File** button (1) and select a file of your choice (2).
+
+        ![](../img/exercise2/1.png ""){: class="w600" }
+
+        ![](../img/exercise2/2.png ""){: class="w500" }
+
+    5. Click the **Submit** button (1). Click on the **OK** button in the alert popup (2). After a few moments, the file will be hashed and the results loaded on the page (3).
+
+        ![](../img/exercise2/3.png ""){: class="w600" }
+
+        ![](../img/exercise2/4.png ""){: class="w400" }
+
+        ![](../img/exercise2/5.png ""){: class="w600" }
+
+    6. In the **Web Developer Tools** pane, you should see two requests to `/api/`. The first is the `POST` request (the file upload) and the second is the `GET` request (refreshing the table on the web page). Click on the first request to `/api/` (1) and then, when a new pane opens, click on the **Request** tab (2).
+
+        ![](../img/exercise3/8.png ""){: class="w600" }
+
+    7. If you look closely at the **Form Data**, what is being submitted to `/api/` is a JSON object with two fields: `file_data` and `file_name`. The first (`file_data`) contains base64-encoded file contents and `file_name` is the name of the file submitted.
+
 ### Challenge 2: Fuzz Evidence-App
 
 Being a web application, we would likely want to spend a decent amount of time performing attempts to uncover the [OWASP Top 10 web vulnerabilities](https://owasp.org/www-project-top-ten/). We do not have that kind of time in this workshop so we will focus on one in particular: **Injection**. Using the `POST` data that was discovered when interacting with the application, see if you can fuzz either one of the `POST` variables and see if the application responds unexpectedly.
