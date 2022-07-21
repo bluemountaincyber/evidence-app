@@ -47,3 +47,52 @@ This serverless web application is used by Sherlock's blue team to import eviden
     - Upon upload the file will be stored in an Amazon S3 bucket in your account which begins with the prefix **evidence-**.
 
     - The metadata (file name, MD5 hash, and SHA1 hash) is generated and stored in an Amazon DynamoDB table called **evidence**.
+
+## Workbook Documentation
+
+This section describes how to serve the SANS Workshop exercise content.
+
+### Pre-requisites
+
+- [Python 3.6+](https://www.python.org/about/gettingstarted/)
+- [Python pip](https://pip.pypa.io/en/stable/installation/)
+
+### Serving the Workbook
+
+1. From a terminal on your local system, navigate to the `workbook` directory.
+
+2. Create a virtual environment called `.venv`.
+
+    ```bash
+    python3 -m venv .venv
+    ```
+
+3. Activate the virtual environment.
+
+    ```bash
+    . .venv/bin/activate
+    ```
+
+4. Install required `pip` packages.
+
+    ```bash
+    pip3 install -r requirements.txt
+    ```
+
+5. Serve workbook with `mkdocs`.
+
+    ```bash
+    mkdocs serve
+    ```
+
+6. The workbook is now available at [http://localhost:8000](http:localhost:8000).
+
+7. When finished with the workbook, type `Ctrl-C` in your terminal and then deactivate the virtual environment like so:
+
+    ```bash
+    deactivate
+    ```
+
+## Workshop Slides
+
+The workshop slides are available by opening the file at `presentation/presentation.html` in your web browser.
