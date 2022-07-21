@@ -6,5 +6,6 @@ terraform.tfstate*
 terraform.tfstate.*backup
 evidence.zip
 workbook/.venv
+workbook/site
 .DS_Store
 settings.json
