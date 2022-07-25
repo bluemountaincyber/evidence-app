@@ -150,7 +150,7 @@ resource "aws_cloudwatch_log_group" "cloudtrail" {
   retention_in_days = 1
 }
 
-resource "time_sleep" "wait_15_seconds_api" {
+resource "time_sleep" "wait_60_seconds" {
   depends_on      = [aws_s3_bucket_policy.cloudtrail_logs]
   create_duration = "60s"
 }
@@ -179,5 +179,5 @@ resource "aws_cloudtrail" "trail" {
       values = ["${aws_s3_bucket.evidence.arn}/"]
     }
   }
-  depends_on = [time_sleep.wait_15_seconds_api]
+  depends_on = [time_sleep.wait_60_seconds]
 }
