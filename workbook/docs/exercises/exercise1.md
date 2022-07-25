@@ -252,6 +252,24 @@ Use Terraform to initialize and deploy the IaC. Afterwards, navigate to the webs
         terraform apply
         ```
 
+        !!! warning
+
+            There is a rare timing issue that may impact your deployment. If you receive the following error, re-run the previous `terraform apply` command:
+
+            ```text
+            Error: Error creating CloudTrail: InsufficientS3BucketPolicyException
+            ```
+
+            In the VERY RARE case that didn't work, you may need to destroy and rebuild. You can do this using the following commands (answering `yes` to each):
+
+            ```bash
+            terraform destroy
+            ```
+
+            ```bash
+            terraform apply
+            ```
+
         !!! summary "Expected Result"
 
             ```bash
@@ -281,6 +299,7 @@ Use Terraform to initialize and deploy the IaC. Afterwards, navigate to the webs
 
             website_url = "https://d1dw3pytnie47k.cloudfront.net"
             ```
+
     4. If you notice the last line of the output, this is the **URL** of the **evidence-app** that you will be testing. Isn't that nice of the developers to make this URL easy to find? Navigate to this URL in another browser tab to see what we are dealing with.
 
         ![](../img/exercise1/8.png ""){: class="w600" }

@@ -151,7 +151,7 @@ resource "aws_cloudwatch_log_group" "cloudtrail" {
 }
 
 resource "time_sleep" "wait_15_seconds_api" {
-  depends_on      = [aws_iam_role_policy_attachment.cloudtrail]
+  depends_on      = [aws_s3_bucket_policy.cloudtrail_logs]
   create_duration = "15s"
 }
 
