@@ -273,7 +273,7 @@ Armed with this new data and an understanding of its available fields, craft AWS
         ```bash
         QUERY_ID=$(aws logs start-query --start-time $(date -d '-3 hours' "+%s") \
           --end-time $(date "+%s") \
-          --query-string 'fields integrationErrorMessage | filter integrationErrorMessage != "-"' and sourceIp == "'$SUSPECT'"' \
+          --query-string 'fields integrationErrorMessage | filter integrationErrorMessage != "-" and sourceIp == "'$SUSPECT'"' \
           --log-group-name /aws/api_gw/evidence_api \
           --query 'queryId' --output text)
         aws logs get-query-results --query-id $QUERY_ID

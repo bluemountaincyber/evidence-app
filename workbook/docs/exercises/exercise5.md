@@ -240,6 +240,7 @@ Now that you know the structure of the log data, extract the following details f
         ```bash
         echo "export SUSPECT=$(zcat /home/cloudshell-user/cloudfront-logs/*gz | grep TotallyNotWget | awk '{print $5}' | head -1)" \
           >> /home/cloudshell-user/.bashrc
+        source /home/cloudshell-user/.bashrc
         cat /home/cloudshell-user/.bashrc
         ```
 

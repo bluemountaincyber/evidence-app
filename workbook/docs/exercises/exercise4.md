@@ -149,7 +149,7 @@ Now that you are armed with credentials, see which account you compromised, get 
 
         !!! summary "Solution"
 
-            ```bash hl_lines="3 4"
+            ```bash hl_lines="2 3"
             2022-07-10 14:34:30 aws-logs-ev6hyhqiwb0duypb
             2022-07-10 14:34:30 evidence-ev6hyhqiwb0duypb
             2022-07-10 14:34:30 webcode-ev6hyhqiwb0duypb
