@@ -275,7 +275,7 @@ Use Terraform to initialize and deploy the IaC. Afterwards, navigate to the webs
             ```bash
             <snip>
 
-            Plan: 37 to add, 0 to change, 0 to destroy.
+            Plan: 35 to add, 0 to change, 0 to destroy.
 
             Changes to Outputs:
               + website_url = (known after apply)
@@ -293,7 +293,7 @@ Use Terraform to initialize and deploy the IaC. Afterwards, navigate to the webs
             aws_s3_object.index_file: Creation complete after 0s [id=index.html]
             aws_s3_object.js_file: Creation complete after 0s [id=script.js]
 
-            Apply complete! Resources: 37 added, 0 changed, 0 destroyed.
+            Apply complete! Resources: 35 added, 0 changed, 0 destroyed.
 
             Outputs:
 
