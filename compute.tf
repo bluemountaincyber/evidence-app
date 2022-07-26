@@ -22,6 +22,8 @@ resource "aws_lambda_function" "evidence" {
   handler       = "evidence.lambda_handler"
   runtime       = "python3.8"
   publish       = true
+  memory_size   = 512
+  timeout       = 30
   depends_on    = [time_sleep.wait_15_seconds_compute]
 }
 

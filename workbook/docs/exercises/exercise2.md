@@ -25,7 +25,7 @@
 
 If you still have the evidence-app home page open in another tab, you will now interact with the application. This application is rather trivial to user: choose a file on your local system to upload and clicking **Submit**.
 
-Upload any file from your local system you wish, but keep it small as large files take some time to be hashed by the application.
+Upload any file from your local system you wish (as long as there are [no spaces](https://github.com/bluemountaincyber/evidence-app/issues/3)), but keep it small (<2 MB) as the app does not yet support large files.
 
 ??? cmd "Solution"
 
