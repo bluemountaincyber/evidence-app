@@ -180,13 +180,22 @@ From **AWS CloudShell**:
 
 You will leverage and analyze common ATT&CK techniques
 
-- **Active Scanning (T1595)**
-- **Cloud Infrastructure Discovery (T1580)**
-- **Exploit Public-Facing Application (T1190)**
-- **Command and Scripting Interpreter: Unix Shell (T1059.003)**
-- **Unsecured Credentials (T1552)**
-- **Data Destruction (T1485)**
-- **Defacement: External Defacement (T1491.002)**
+<div style="width: 95%;">
+  <div style="width: 65%; float: left;">
+    <ul>
+      <li><b>Active Scanning (T1595)</b></li>
+      <li><b>Cloud Infrastructure Discovery (T1580)</b></li>
+      <li><b>Exploit Public-Facing Application (T1190)</b></li>
+      <li><b>Command and Scripting Interpreter: Unix Shell (T1059.003)</b></li>
+      <li><b>Unsecured Credentials (T1552)</b></li>
+      <li><b>Data Destruction (T1485)</b></li>
+      <li><b>Defacement: External Defacement (T1491.002)</b></li>
+    </ul>
+  </div>
+  <div style="width: 33%; float: right;">
+    <img src="img/Moriarty.png"/>
+  </div>
+</div>
 
 ---
 
