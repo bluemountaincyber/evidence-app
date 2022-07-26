@@ -23,6 +23,9 @@ style: |
   h2 {
     text-align: center;
   }
+  h3 {
+    text-align: center;
+  }
   .author {
     color: #ffffff;
   }
@@ -42,7 +45,7 @@ style: |
   }
 
 ---
-<!-- markdownlint-disable MD004 MD007 MD012 MD024 MD026 MD033-->
+<!-- markdownlint-disable MD001 MD004 MD007 MD012 MD024 MD026 MD033 MD034-->
 
 # Attacking and Defending Serverless Applications Workshop
 
@@ -132,11 +135,9 @@ From **AWS CloudShell**:
 
 # Now It's Your Turn!
 
-<br/>
+### https://attack-defend-serverless.sanscloudwars.com
 
 ## Complete _Exercise 1_ and then STOP!
-
-<br/>
 
 ![height:300px center](img/Cloud_Ace_Final.png)
 
@@ -203,7 +204,7 @@ You will leverage and analyze common ATT&CK techniques
 
 - Custom Python script to **fuzz** this application
     - `/home/cloudshell-user/evidence-app/scripts/fuzz_evidence_app.py`
-- Payloads consist of popular command injection payloads
+- Tests popular command injection payloads
     - [https://github.com/payloadbox/command-injection-payload-list](https://github.com/payloadbox/command-injection-payload-list)
 
 ![height:145px](img/fuzz_example.png)
@@ -281,5 +282,12 @@ You did a **LOT** in this workshop by attacking and detecting:
 ## Complete _Exercise 8_ and... you're done!
 
 <p style="text-align: center;">Thanks for attending and please feel free to ask any questions!</p>
-
-![height:300px center](img/Cloud_Ace_Final.png)
+<br/>
+<div style="width: 95%;">
+  <div style="width: 50%; float: left;">
+    <img src="img/SANS_SEC488.png" style="width: 350px; display: block; margin: 0 auto;">
+  </div>
+  <div style="width: 50%; float: right">
+    <img src="img/SANS_SEC541.png" style="width: 350px; display: block; margin: 0 auto;">
+  </div>
+</div>
