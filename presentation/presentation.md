@@ -58,6 +58,8 @@ style: |
 
 # Agenda (1/2)
 
+* Workshop Pre-Requisites
+
 * Evidence-App Overview
     - **Exercise 1: Deploying the Serverless Application**
 
@@ -77,6 +79,19 @@ style: |
 
 * Conclusion
     - **Exercise 8: Tearing Down Serverless Application**
+
+---
+
+# Pre-Requisites For This Workshop
+
+- AWS Account with `root` or `AdministratorAccess` privileges
+- Supported Web Browser
+    - Preferably Chrome or Firefox
+- Exercise Instructions
+    - [https://attack-defend-serverless.sanscloudwars.com](https://attack-defend-serverless.sanscloudwars.com)
+
+* Have watched Sherlock (the good one...)
+    * Just kidding :smile:
 
 ---
 
