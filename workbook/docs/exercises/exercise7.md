@@ -269,7 +269,7 @@ Now that you have found very bizarre entries in the DynamoDB table (including AW
             If you do not receive any results or receive an error, wait a few more seconds, hit the `up` arrow in your **CloudShell** session to bring up the last command, and hit `Enter`.
 
 
-        !!! summary "Expected Results"
+        !!! summary "Sample Results"
 
             ```bash
             DeleteObject

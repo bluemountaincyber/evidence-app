@@ -195,7 +195,7 @@ Armed with this new data and an understanding of its available fields, craft AWS
 
 ??? cmd "Solution"
 
-    1. Let's being by launching a really basic query which will be extended to identify the possible fuzzing by the suspect IP address. List all of the log entries by executing the following commands in your **CloudShell** session:
+    1. Let's begin by launching a really basic query which will be extended to identify the possible fuzzing by the suspect IP address. List all of the log entries by executing the following commands in your **CloudShell** session:
 
         !!! note
 

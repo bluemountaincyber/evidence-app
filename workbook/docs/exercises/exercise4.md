@@ -155,7 +155,7 @@ Now that you are armed with credentials, see which account you compromised, get 
             2022-07-10 14:34:30 webcode-ev6hyhqiwb0duypb
             ```
 
-    4. After some trial-and-error, you can that you can utilize the `ListBuckets` API call with these stolen credentials. Set the `WEBCODE_BUCKET` and `EVIDENCE_BUCKET` environment variables to the names of the buckets beginning with `evidence-` and `webcode-`, respectively, as you will interact with these buckets a few times in the next challenge. Here is some Bash Kung Fu to do just that:
+    4. After some trial-and-error, you can see that you can utilize the `ListBuckets` API call with these stolen credentials. Set the `WEBCODE_BUCKET` and `EVIDENCE_BUCKET` environment variables to the names of the buckets beginning with `evidence-` and `webcode-`, respectively, as you will interact with these buckets a few times in the next challenge. Here is some Bash Kung Fu to do just that:
 
         ```bash
         EVIDENCE_BUCKET=$(aws s3 ls | egrep -o evidence-.*)
