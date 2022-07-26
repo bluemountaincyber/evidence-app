@@ -98,6 +98,7 @@ resource "aws_s3_bucket_policy" "aws-logs_policy" {
     Version = "2008-10-17"
     Statement = [
       {
+        Sid       = "AWSCloudFrontWrite"
         Effect    = "Allow"
         Principal = { "AWS" : "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${aws_cloudfront_origin_access_identity.evidence-oai.id}" }
         Action    = "s3:*"
