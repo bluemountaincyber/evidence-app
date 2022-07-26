@@ -90,14 +90,6 @@ style: |
 
 ---
 
-![height:660px center](img/Evidence_App_Diagram.png)
-
----
-
-![height:660px center](img/DevSecOps_Infinity_Loop.png)
-
----
-
 # So... what's in that repo?
 
 - **EVERYTHING** as Code
@@ -108,6 +100,14 @@ style: |
     * This presentation (`marp`)
 
 * **LOTS** of opportunity for a coding mistake...
+
+---
+
+![height:660px center](img/Evidence_App_Diagram.png)
+
+---
+
+![height:660px center](img/DevSecOps_Infinity_Loop.png)
 
 ---
 
