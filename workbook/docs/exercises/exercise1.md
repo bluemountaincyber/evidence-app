@@ -6,8 +6,7 @@
 
 * Log into AWS account and launch **CloudShell** session in the N. Virginia (**us-east-1**) region.
 * Download source code using `git` from developer's [GitHub repository](https://github.com/bluemountaincyber/evidence-app).
-* Install Infrastructure as Code (IaC) tool (`terraform`).
-* Deploy **evidence-app** using `terraform`.
+* Deploy **evidence-app** using AWS CloudFormation.
 
 ## Challenges
 

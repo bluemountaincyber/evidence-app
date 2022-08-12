@@ -1,0 +1,413 @@
+Parameters:
+  FunctionName:
+    Type: String
+    Default: evidence
+
+Resources:
+  LAMBDAROLE:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub ${FunctionName}LambdaRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: !Sub '${FunctionName}LambdaExecutionPolicy'
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: 'logs:CreateLogGroup'
+                Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*'
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${FunctionName}:*'
+              - Effect: Allow
+                Action:
+                  - dynamodb:ListTables
+                  - dynamodb:Scan
+                  - dynamodb:PutItem
+                Resource: '*'
+              - Effect: Allow
+                Action: 's3:*'
+                Resource: '*'
+  CLOUDTRAILROLE:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${FunctionName}CloudTrailRole'
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - cloudtrail.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: !Sub '${FunctionName}CloudTrailPolicy'
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: 
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !Sub '${CLOUDTRAILLOGGROUP.Arn}:*'
+  APIGATEWAY:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: !Sub ${FunctionName}_api
+      ProtocolType: HTTP
+      CorsConfiguration:
+        AllowOrigins:
+          - '*'
+  APIGATEWAYSTAGE:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties: 
+      AccessLogSettings: 
+        DestinationArn: !GetAtt APIGWLOGGROUP.Arn
+        Format: "{\"requestId\": \"$context.requestId\",\"sourceIp\": \"$context.identity.sourceIp\",\"requestTime\": \"$context.requestTime\",\"protocol\": \"$context.protocol\",\"httpMethod\": \"$context.httpMethod\",\"resourcePath\": \"$context.resourcePath\",\"routeKey\": \"$context.routeKey\",\"status\": \"$context.status\",\"responseLength\": \"$context.responseLength\",\"integrationErrorMessage\": \"$context.integrationErrorMessage\"}"
+      AccessPolicyId: String
+      ApiId: !Ref APIGATEWAY
+      AutoDeploy: True
+      StageName: api
+  APIGATEWAYINTEGRATION:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties: 
+      ApiId: !Ref APIGATEWAY
+      IntegrationMethod: POST
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LAMBDAFUNCTION.Arn}/invocations'
+      PayloadFormatVersion: 1.0
+  APIGATEWAYROUTE:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: 
+      ApiId: !Ref APIGATEWAY
+      RouteKey: ANY /
+      Target: !Sub 'integrations/${APIGATEWAYINTEGRATION}'
+  ORIGINACCESSIDENTITY:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties: 
+      CloudFrontOriginAccessIdentityConfig: 
+        Comment: !Sub '${FunctionName}-OAI'
+  APIORIGINACCESSIDENTITY:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties: 
+      CloudFrontOriginAccessIdentityConfig: 
+        Comment: !Sub '${FunctionName}-OAI'
+  CLOUDFRONT:
+    Type: AWS::CloudFront::Distribution
+    Properties: 
+      DistributionConfig:
+        Origins:
+          - ConnectionAttempts: 3
+            ConnectionTimeout: 10
+            Id: !Ref ORIGINACCESSIDENTITY
+            DomainName: !GetAtt WEBCODEBUCKET.DomainName
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${ORIGINACCESSIDENTITY}'
+          - Id: !Ref APIORIGINACCESSIDENTITY
+            DomainName: !Select [2, !Split ["/", !GetAtt APIGATEWAY.ApiEndpoint]]
+            CustomOriginConfig:
+                HTTPPort: 80
+                HTTPSPort: 443
+                OriginProtocolPolicy: https-only
+                OriginSSLProtocols: 
+                  - TLSv1.2
+        Enabled: True
+        IPV6Enabled: True
+        Comment: !Sub '${FunctionName} Website'
+        DefaultRootObject: index.html
+        CacheBehaviors:
+          - PathPattern: "/api/*"
+            AllowedMethods:
+              - HEAD
+              - DELETE
+              - POST
+              - GET
+              - OPTIONS
+              - PUT
+              - PATCH
+            CachedMethods:
+              - GET
+              - OPTIONS
+              - HEAD
+            Compress: False
+            TargetOriginId: !Ref APIORIGINACCESSIDENTITY
+            ForwardedValues:
+              QueryString: True
+              Cookies:
+                Forward: all
+            ViewerProtocolPolicy: redirect-to-https
+            MinTTL: 0
+            MaxTTL: 0
+            DefaultTTL: 0
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachedMethods:
+            - GET
+            - HEAD
+          Compress: False
+          TargetOriginId: !Ref ORIGINACCESSIDENTITY
+          ForwardedValues:
+            QueryString: False
+            Cookies:
+              Forward: none
+          ViewerProtocolPolicy: redirect-to-https
+          MinTTL: 0
+          MaxTTL: 120
+          DefaultTTL: 60
+        PriceClass: PriceClass_All
+        Restrictions:
+          GeoRestriction:
+            RestrictionType: none
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: True
+        Logging:
+          Bucket: !GetAtt AWSLOGSBUCKET.DomainName
+          Prefix: "CloudFront/"
+    DependsOn: 
+      - AWSLOGSBUCKETPOLICY
+  DYNAMODBTABLE:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: evidence
+      BillingMode: PROVISIONED
+      AttributeDefinitions:
+        - AttributeName: FileName
+          AttributeType: S
+        - AttributeName: MD5Sum
+          AttributeType: S
+      KeySchema:
+        - AttributeName: FileName
+          KeyType: HASH
+        - AttributeName: MD5Sum
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 20
+        WriteCapacityUnits: 20
+  EVIDENCEBUCKET:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'evidence-${AWS::AccountId}'
+      PublicAccessBlockConfiguration:
+          BlockPublicAcls: True
+          BlockPublicPolicy: True
+          IgnorePublicAcls: True
+          RestrictPublicBuckets: True
+  WEBCODEBUCKET:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'webcode-${AWS::AccountId}'
+      PublicAccessBlockConfiguration:
+          BlockPublicAcls: True
+          BlockPublicPolicy: True
+          IgnorePublicAcls: True
+          RestrictPublicBuckets: True
+      WebsiteConfiguration:
+        ErrorDocument: error.html
+        IndexDocument: index.html
+  WEBCODEBUCKETPOLICY:
+    Type: AWS::S3::BucketPolicy
+    Properties: 
+      Bucket: !Ref WEBCODEBUCKET
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:GetObject
+            Principal:
+              AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${ORIGINACCESSIDENTITY}'
+            Resource: !Sub 'arn:aws:s3:::${WEBCODEBUCKET}/*'
+  AWSLOGSBUCKET:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'awslogs-${AWS::AccountId}'
+      PublicAccessBlockConfiguration:
+          BlockPublicAcls: True
+          BlockPublicPolicy: True
+          IgnorePublicAcls: True
+          RestrictPublicBuckets: True
+  AWSLOGSBUCKETPOLICY:
+    Type: AWS::S3::BucketPolicy
+    Properties: 
+      Bucket: !Ref AWSLOGSBUCKET
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:*
+            Principal:
+              AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${ORIGINACCESSIDENTITY}'
+            Resource: !Sub 'arn:aws:s3:::${AWSLOGSBUCKET}/*'
+          - Effect: Allow
+            Action:
+              - s3:GetBucketAcl
+            Principal:
+              Service: cloudtrail.amazonaws.com
+            Resource: !Sub 'arn:aws:s3:::${AWSLOGSBUCKET}'
+            Condition:
+              StringEquals:
+                aws:SourceArn: !Sub 'arn:aws:cloudtrail:${AWS::Region}:${AWS::AccountId}:trail/cloudtrail-${AWS::AccountId}'
+          - Effect: Allow
+            Action:
+              - s3:PutObject
+            Principal:
+              Service: cloudtrail.amazonaws.com
+            Resource: !Sub 'arn:aws:s3:::${AWSLOGSBUCKET}/*'
+            Condition:
+              StringEquals:
+                s3:x-amz-acl: bucket-owner-full-control
+                aws:SourceArn: !Sub 'arn:aws:cloudtrail:${AWS::Region}:${AWS::AccountId}:trail/cloudtrail-${AWS::AccountId}'
+  APIGWLOGGROUP:
+    Type: AWS::Logs::LogGroup
+    Properties: 
+      LogGroupName: !Sub '/aws/api_gw/${FunctionName}_api'
+      RetentionInDays: 1
+  CLOUDTRAILLOGGROUP:
+    Type: AWS::Logs::LogGroup
+    Properties: 
+      LogGroupName: !Sub 'cloudtrail-${AWS::AccountId}'
+      RetentionInDays: 1
+  LAMBDALOGGROUP:
+    Type: AWS::Logs::LogGroup
+    Properties: 
+      LogGroupName: !Sub '/aws/lambda/${FunctionName}'
+      RetentionInDays: 1
+  CLOUDTRAIL:
+    Type: AWS::CloudTrail::Trail
+    Properties: 
+      CloudWatchLogsLogGroupArn: !GetAtt CLOUDTRAILLOGGROUP.Arn
+      CloudWatchLogsRoleArn: !GetAtt CLOUDTRAILROLE.Arn
+      EventSelectors:
+        - DataResources:
+          - Type: AWS::S3::Object
+            Values:
+              - !Sub 'arn:aws:s3:::${WEBCODEBUCKET}/*'
+          - Type: AWS::S3::Object
+            Values:
+              - !Sub 'arn:aws:s3:::${EVIDENCEBUCKET}/*'
+          IncludeManagementEvents: True
+          ReadWriteType: All
+      IsLogging: True
+      S3BucketName: !Ref AWSLOGSBUCKET
+      TrailName: !Sub 'cloudtrail-${AWS::AccountId}'
+    DependsOn: 
+      - AWSLOGSBUCKETPOLICY
+  LAMBDAFUNCTION:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: evidence
+      Handler: index.lambda_handler
+      Role: !GetAtt LAMBDAROLE.Arn
+      Runtime: python3.9
+      Code:
+        ZipFile: !Sub |
+          """
+          evidence AWS Lambda function code
+          """
+
+          import json
+          import base64
+          import os
+          import boto3
+
+          def get_evidence():
+              """
+              When GET request is made to function, return all entries in evidence DynamoDB table.
+              """
+
+              client = boto3.client('dynamodb')
+              results = client.scan(TableName="evidence")
+              return {
+                  'statusCode': 200,
+                  'body': str(results)
+              }
+
+          def post_evidence(event: dict):
+              """
+              When POST request is made to function, upload data to S3 and write hash values to
+              evidence DynamoDB table.
+              """
+
+              req_body = json.loads(base64.b64decode(event["body"]))
+
+              # Write file to S3
+              client = boto3.client('s3')
+              client.put_object(
+                  Body = base64.b64decode(req_body["file_data"]),
+                  Bucket = "${EVIDENCEBUCKET}",
+                  Key = req_body["file_name"]
+                  )
+
+              # Determine hashes
+              filename = "/tmp/" + req_body["file_name"]
+              temp_file = open(filename, "wb")
+              temp_file.write(base64.b64decode(req_body["file_data"]))
+              temp_file.close()
+
+              md5_sum = os.popen("md5sum " + filename).read().split("  ")[0]
+              sha1_sum = os.popen("sha1sum " + filename).read().split("  ")[0]
+
+              # Write results to database
+              client = boto3.client('dynamodb')
+              client.put_item(
+                  TableName='evidence',
+                  Item={
+                      'FileName': {
+                          'S': req_body["file_name"]
+                      },
+                      'MD5Sum': {
+                          'S': md5_sum
+                      },
+                      'SHA1Sum': {
+                          'S': sha1_sum
+                      }
+                  }
+              )
+
+              return {
+                  'statusCode': 200,
+                  'body': "Success"
+              }
+
+          # pylint: disable=unused-argument
+          def lambda_handler (event, context):
+              """
+              Entrypoint for AWS Lambda Function - evidence
+              """
+
+              request_method = event['requestContext']['httpMethod']
+              if request_method == "GET":
+                  response = get_evidence()
+              elif request_method == "POST":
+                  response = post_evidence(event)
+              else:
+                  response = {
+                      'statusCode': 403,
+                      'body': "Unauthorized HTTP Method: " + request_method
+                  }
+              return response
+  LAMBDAPERMISSION:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref FunctionName
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGATEWAY}/*/*'
+    DependsOn: LAMBDAFUNCTION

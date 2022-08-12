@@ -10,7 +10,9 @@ This serverless web application is used by Sherlock's blue team to import eviden
 
 ## Deployment
 
-1. Pre-requisistes:
+### Terraform
+
+1. Pre-requisites:
 
     - [Terraform 1.2.2+](https://www.terraform.io/downloads)
 
@@ -18,7 +20,7 @@ This serverless web application is used by Sherlock's blue team to import eviden
 
     - [Git](https://git-scm.com/downloads)
 
-    - Command-line environment (e.g., Windows Terminal, macOS Terminal, AWS CloudShell)
+    - Command-line environment (e.g., Windows Terminal, Linux Terminal, macOS Terminal, AWS CloudShell)
 
 2. Clone this repository to your local system/CloudShell and `cd` to the newly-cloned directory.
 
@@ -32,6 +34,31 @@ This serverless web application is used by Sherlock's blue team to import eviden
     ```bash
     terraform init
     terraform apply # Answer 'yes' when prompted
+    ```
+
+### CloudFormation
+
+1. Pre-requisites:
+
+    - [AWS CLI Tools](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+
+    - [jq](https://stedolan.github.io/jq/download/)
+
+    - [Git](https://git-scm.com/downloads)
+
+    - Linux Command-line environment (e.g., Linux Terminal, macOS Terminal, AWS CloudShell)
+
+2. Clone this repository to your local system/CloudShell and `cd` to the newly-cloned directory.
+
+    ```bash
+    git clone https://github.com/bluemountaincyber/evidence-app.git
+    cd evidence-app
+    ```
+
+3. Use the provided `cloudformation-deploy.sh` script to deploy the CloudFormation template (`cloudformation.yaml`) and load the web content. The deployment should take around 5 minutes.
+
+    ```bash
+    ./cloudformation-deploy.sh
     ```
 
 ## Using the Application
