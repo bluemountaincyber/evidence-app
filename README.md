@@ -122,4 +122,4 @@ This section describes how to serve the SANS Workshop exercise content.
 
 ## Workshop Slides
 
-The workshop slides are available by opening the file at `presentation/presentation.html` in your web browser.
+The workshop slides are available by opening the file at `presentation/presentation.html` in your web browser or by downloading and opening the `presentation/presentation.pdf` PDF file.

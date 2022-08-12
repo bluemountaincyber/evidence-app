@@ -109,7 +109,7 @@ style: |
 
 - **EVERYTHING** as Code
     * Application **Source Code** (`HTML`, `CSS`, `JavaScript`, and `Python 3`)
-    * **Infrastructure as Code (IaC)** to build cloud resources and deploy application (`Terraform`)
+    * **Infrastructure as Code (IaC)** to build cloud resources and deploy application (`Terraform` and `CloudFormation`)
     * **Exercise documentation** for this workshop (`mkdocs`)
         - In case you want to work on this afterwards or share with your friends/co-workers
     * This presentation (`marp`)
@@ -130,21 +130,20 @@ style: |
 
 From **AWS CloudShell**:
 
-* Install Terraform:
+* Download Source Code:
 
     ```bash
-    wget https://releases.hashicorp.com/terraform/1.2.4/terraform_1.2.4_linux_amd64.zip
-    unzip -d /home/cloudshell-user/.local/bin/ /home/cloudshell-user/terraform.zip
+    git clone https://github.com/bluemountaincyber/evidence-app.git
+    cd /home/cloudshell-user/evidence-app
     ```
 
-* Execute Terraform:
+* Execute `cloudformation-deploy.sh`:
 
   ```bash
-  git clone https://github.com/bluemountaincyber/evidence-app.git
-  cd /home/cloudshell-user/evidence-app
-  terraform init
-  terraform apply
+  ./cloudformation-deploy.sh
   ```
+
+* Sit back and relax for ~5 mins
 
 ---
 
