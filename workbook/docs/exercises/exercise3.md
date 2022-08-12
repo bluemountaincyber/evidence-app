@@ -172,100 +172,100 @@ How was it possible that you could run system commands by submitting a simple `P
 
 ??? cmd "Solution"
 
-    1. Review the source code by running the following command in your **CloudShell** session:
+    1. The source code for your Lambda function is included in the CloudFormation template (`cloudformation.yaml`) that was deployed in the first exercise by `cloudformation-deploy.sh`. Review the source code by running the following command in your **CloudShell** session:
 
         ```bash
-        cat /home/cloudshell-user/evidence-app/evidence.py.tpl
+        grep ZipFile -A85 cloudformation.yaml | tail -85
         ```
 
         !!! summary "Expected Result"
 
             ```python
-            """
-            evidence AWS Lambda function code
-            """
+                    """
+                    evidence AWS Lambda function code
+                    """
 
-            import json
-            import base64
-            import os
-            import boto3
+                    import json
+                    import base64
+                    import os
+                    import boto3
 
-            def get_evidence():
-                """
-                When GET request is made to function, return all entries in evidence DynamoDB table.
-                """
+                    def get_evidence():
+                        """
+                        When GET request is made to function, return all entries in evidence DynamoDB table.
+                        """
 
-                client = boto3.client('dynamodb')
-                results = client.scan(TableName="evidence")
-                return {
-                    'statusCode': 200,
-                    'body': str(results)
-                }
-
-            def post_evidence(event: dict):
-                """
-                When POST request is made to function, upload data to S3 and write hash values to
-                evidence DynamoDB table.
-                """
-
-                req_body = json.loads(base64.b64decode(event["body"]))
-
-                # Write file to S3
-                client = boto3.client('s3')
-                client.put_object(
-                    Body = base64.b64decode(req_body["file_data"]),
-                    Bucket = "${bucket}",
-                    Key = req_body["file_name"]
-                    )
-
-                # Determine hashes
-                filename = "/tmp/" + req_body["file_name"]
-                temp_file = open(filename, "wb")
-                temp_file.write(base64.b64decode(req_body["file_data"]))
-                temp_file.close()
-
-                md5_sum = os.popen("md5sum " + filename).read().split("  ")[0]
-                sha1_sum = os.popen("sha1sum " + filename).read().split("  ")[0]
-
-                # Write results to database
-                client = boto3.client('dynamodb')
-                client.put_item(
-                    TableName='evidence',
-                    Item={
-                        'FileName': {
-                            'S': req_body["file_name"]
-                        },
-                        'MD5Sum': {
-                            'S': md5_sum
-                        },
-                        'SHA1Sum': {
-                            'S': sha1_sum
+                        client = boto3.client('dynamodb')
+                        results = client.scan(TableName="evidence")
+                        return {
+                            'statusCode': 200,
+                            'body': str(results)
                         }
-                    }
-                )
 
-                return {
-                    'statusCode': 200,
-                    'body': "Success"
-                }
+                    def post_evidence(event: dict):
+                        """
+                        When POST request is made to function, upload data to S3 and write hash values to
+                        evidence DynamoDB table.
+                        """
 
-            # pylint: disable=unused-argument
-            def lambda_handler (event, context):
-                """
-                Entrypoint for AWS Lambda Function - evidence
-                """
+                        req_body = json.loads(base64.b64decode(event["body"]))
 
-                request_method = event['requestContext']['httpMethod']
-                if request_method == "GET":
-                    response = get_evidence()
-                elif request_method == "POST":
-                    response = post_evidence(event)
-                else:
-                    response = {
-                        'statusCode': 403,
-                        'body': "Unauthorized HTTP Method: " + request_method
-                    }
-                return response
+                        # Write file to S3
+                        client = boto3.client('s3')
+                        client.put_object(
+                            Body = base64.b64decode(req_body["file_data"]),
+                            Bucket = "${EVIDENCEBUCKET}",
+                            Key = req_body["file_name"]
+                            )
+
+                        # Determine hashes
+                        filename = "/tmp/" + req_body["file_name"]
+                        temp_file = open(filename, "wb")
+                        temp_file.write(base64.b64decode(req_body["file_data"]))
+                        temp_file.close()
+
+                        md5_sum = os.popen("md5sum " + filename).read().split("  ")[0]
+                        sha1_sum = os.popen("sha1sum " + filename).read().split("  ")[0]
+
+                        # Write results to database
+                        client = boto3.client('dynamodb')
+                        client.put_item(
+                            TableName='evidence',
+                            Item={
+                                'FileName': {
+                                    'S': req_body["file_name"]
+                                },
+                                'MD5Sum': {
+                                    'S': md5_sum
+                                },
+                                'SHA1Sum': {
+                                    'S': sha1_sum
+                                }
+                            }
+                        )
+
+                        return {
+                            'statusCode': 200,
+                            'body': "Success"
+                        }
+
+                    # pylint: disable=unused-argument
+                    def lambda_handler (event, context):
+                        """
+                        Entrypoint for AWS Lambda Function - evidence
+                        """
+
+                        request_method = event['requestContext']['httpMethod']
+                        if request_method == "GET":
+                            response = get_evidence()
+                        elif request_method == "POST":
+                            response = post_evidence(event)
+                        else:
+                            response = {
+                                'statusCode': 403,
+                                'body': "Unauthorized HTTP Method: " + request_method
+                            }
+                        return response
             ```
         
     2. It is important to know that, when you are writing Lambda functions, there is going to be a main function that is executed when the function is triggered. A common name for this initial function is `lambda_handler`. That is what is being used in this application (but could have been anything - you would need to look at the Lambda resource configuration to acquire the handler function name).

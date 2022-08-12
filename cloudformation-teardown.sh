@@ -28,9 +28,11 @@ done
 # Empty awslogs-* bucket (again)
 printf "\033[33mEmptying S3 buckets (2 of 2)...\033[0m\n"
 LOGSBUCKET=$(aws s3 ls | egrep -o "awslogs-[0-9]{12}")
-aws s3 rm --recursive s3://$LOGSBUCKET >/dev/null
+aws s3 rm --recursive s3://$LOGSBUCKET >/dev/null 2>/dev/null
 
 # Tear down CloudFormation Stack (again)
 printf "\033[33mTearing down CloudFormation Stack (2 of 2)...\033[0m\n"
 aws cloudformation delete-stack --region us-east-1 \
   --stack-name evidence-app
+
+printf "\033[32mTeardown complete!\033[0m\n"

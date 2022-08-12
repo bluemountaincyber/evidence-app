@@ -59,7 +59,7 @@ Your CloudFront access logs can be found in an S3 bucket beginning with `aws-log
         !!! summary "Expected Result"
 
             ```bash
-            2022-07-17 13:33:27 aws-logs-rprcf6nm0n42opsl
+            2022-07-17 13:33:27 awslogs-rprcf6nm0n42opsl
             2022-07-17 13:33:27 evidence-rprcf6nm0n42opsl
             2022-07-17 13:33:27 webcode-rprcf6nm0n42opsl
             ```
@@ -67,7 +67,7 @@ Your CloudFront access logs can be found in an S3 bucket beginning with `aws-log
     2. Just as you did in exercise 4, set the S3 bucket beginning with `aws-logs-` to the `LOG_BUCKET` environment variable as we will reference this bucket a few times.
 
         ```bash
-        export LOG_BUCKET=$(aws s3 ls | egrep -o aws-logs-.*)
+        export LOG_BUCKET=$(aws s3 ls | egrep -o awslogs-.*)
         ```
 
     3. Now, take a look at the folder structure of this bucket.

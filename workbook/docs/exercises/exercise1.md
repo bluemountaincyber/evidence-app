@@ -81,12 +81,12 @@ Now that you are in a **CloudShell** session, you will need to download the code
 
             ```bash
             Cloning into 'evidence-app'...
-            remote: Enumerating objects: 60, done.
-            remote: Counting objects: 100% (60/60), done.
-            remote: Compressing objects: 100% (45/45), done.
-            remote: Total 60 (delta 17), reused 34 (delta 9), pack-reused 0
-            Receiving objects: 100% (60/60), 1.23 MiB | 27.41 MiB/s, done.
-            Resolving deltas: 100% (17/17), done.
+            remote: Enumerating objects: 465, done.
+            remote: Counting objects: 100% (74/74), done.
+            remote: Compressing objects: 100% (55/55), done.
+            remote: Total 465 (delta 33), reused 50 (delta 19), pack-reused 391
+            Receiving objects: 100% (465/465), 17.97 MiB | 30.67 MiB/s, done.
+            Resolving deltas: 100% (239/239), done.
             ```
 
     3. Ensure that the code downloaded by running the following command:
@@ -98,212 +98,71 @@ Now that you are in a **CloudShell** session, you will need to download the code
         !!! summary "Expected Result"
 
             ```bash
-            total 68
-            drwxrwxr-x  5 cloudshell-user cloudshell-user 4096 Jul  6 13:51 .
-            drwxr-xr-x 10 cloudshell-user cloudshell-user 4096 Jul  6 13:51 ..
-            -rw-rw-r--  1 cloudshell-user cloudshell-user 4525 Jul  6 13:51 api.tf
-            -rw-rw-r--  1 cloudshell-user cloudshell-user  875 Jul  6 13:51 compute.tf
-            drwxrwxr-x  3 cloudshell-user cloudshell-user 4096 Jul  6 13:51 docs
-            -rw-rw-r--  1 cloudshell-user cloudshell-user 2087 Jul  6 13:51 evidence.py.tpl
-            drwxrwxr-x  8 cloudshell-user cloudshell-user 4096 Jul  6 13:51 .git
-            -rw-rw-r--  1 cloudshell-user cloudshell-user  114 Jul  6 13:51 .gitignore
-            -rw-rw-r--  1 cloudshell-user cloudshell-user 4193 Jul  6 13:51 iam.tf
-            -rw-rw-r--  1 cloudshell-user cloudshell-user  232 Jul  6 13:51 main.tf
-            -rw-rw-r--  1 cloudshell-user cloudshell-user  146 Jul  6 13:51 outputs.tf
-            -rw-rw-r--  1 cloudshell-user cloudshell-user 1878 Jul  6 13:51 README.md
-            -rw-rw-r--  1 cloudshell-user cloudshell-user 3852 Jul  6 13:51 storage.tf
-            -rw-rw-r--  1 cloudshell-user cloudshell-user   68 Jul  6 13:51 variables.tf
-            drwxrwxr-x  2 cloudshell-user cloudshell-user 4096 Jul  6 13:51 webcode
+            total 104
+            drwxrwxr-x 8 cloudshell-user cloudshell-user  4096 Aug 12 18:05 .
+            drwxr-xr-x 8 cloudshell-user cloudshell-user  4096 Aug 12 18:05 ..
+            -rw-rw-r-- 1 cloudshell-user cloudshell-user  4986 Aug 12 18:05 api.tf
+            -rwxrwxr-x 1 cloudshell-user cloudshell-user  1471 Aug 12 18:05 cloudformation-deploy.sh
+            -rwxrwxr-x 1 cloudshell-user cloudshell-user  1417 Aug 12 18:05 cloudformation-teardown.sh
+            -rw-rw-r-- 1 cloudshell-user cloudshell-user 13762 Aug 12 18:05 cloudformation.yaml
+            -rw-rw-r-- 1 cloudshell-user cloudshell-user   935 Aug 12 18:05 compute.tf
+            drwxrwxr-x 3 cloudshell-user cloudshell-user  4096 Aug 12 18:05 docs
+            -rw-rw-r-- 1 cloudshell-user cloudshell-user  2087 Aug 12 18:05 evidence.py.tpl
+            drwxrwxr-x 8 cloudshell-user cloudshell-user  4096 Aug 12 18:05 .git
+            -rw-rw-r-- 1 cloudshell-user cloudshell-user   181 Aug 12 18:05 .gitignore
+            -rw-rw-r-- 1 cloudshell-user cloudshell-user  4846 Aug 12 18:05 iam.tf
+            -rw-rw-r-- 1 cloudshell-user cloudshell-user   232 Aug 12 18:05 main.tf
+            -rw-rw-r-- 1 cloudshell-user cloudshell-user   146 Aug 12 18:05 outputs.tf
+            drwxrwxr-x 3 cloudshell-user cloudshell-user  4096 Aug 12 18:05 presentation
+            -rw-rw-r-- 1 cloudshell-user cloudshell-user  3757 Aug 12 18:05 README.md
+            drwxrwxr-x 2 cloudshell-user cloudshell-user  4096 Aug 12 18:05 scripts
+            -rw-rw-r-- 1 cloudshell-user cloudshell-user  2863 Aug 12 18:05 storage.tf
+            -rw-rw-r-- 1 cloudshell-user cloudshell-user    68 Aug 12 18:05 variables.tf
+            drwxrwxr-x 2 cloudshell-user cloudshell-user  4096 Aug 12 18:05 webcode
+            drwxrwxr-x 3 cloudshell-user cloudshell-user  4096 Aug 12 18:05 workbook
             ```
 
-### Challenge 3: Download and Install Terraform
+### Challenge 3: Deploy Evidence App
 
-If you noticed some of the file names of the downloaded source code, you may have noticed that several files end in `.tf`. If these files are named properly, this means we may have Terraform code. That's exactly what these files are: IaC files to quickly deploy the **evidence-app** application and supporting cloud infrastructure.
+Finally, you have all of the components needed to deploy the application in your AWS account.
 
-Since **CloudShell** does not include `terraform`, download version 1.2.4 of the Linux binary from [terraform.io](https://releases.hashicorp.com/terraform/1.2.4/terraform_1.2.4_linux_amd64.zip), extract it (as the download is a `.zip`), and place the `terraform` file in the `/home/cloudshell-user/.local/bin/` directory of your **CloudShell** instance.
+Use `cloudformation-deploy.sh` to deploy the IaC. Afterwards, navigate to the website created by this IaC.
 
 ??? cmd "Solution"
 
-    1. Not only is `git` included in the **CloudShell** environment, so is `wget`. This utility allows you to download files and save them locally in your session. Run the following command to download the compressed Terraform binary and save it to the `cloud-user` home directory:
-
-        ```bash
-        wget https://releases.hashicorp.com/terraform/1.2.4/terraform_1.2.4_linux_amd64.zip -O /home/cloudshell-user/terraform.zip
-        ```
-
-        !!! summary "Expected Result"
-
-            ```bash
-            --2022-07-06 13:59:10--  https://releases.hashicorp.com/terraform/1.2.4/terraform_1.2.4_linux_amd64.zip
-            Resolving releases.hashicorp.com (releases.hashicorp.com)... 146.75.34.49
-            Connecting to releases.hashicorp.com (releases.hashicorp.com)|146.75.34.49|:443... connected.
-            HTTP request sent, awaiting response... 200 OK
-            Length: 19895510 (19M) [application/zip]
-            Saving to: ‘/home/cloudshell-user/terraform.zip’
-
-            100%[=======================================================================================================================================>] 19,895,510  89.4MB/s   in 0.2s   
-
-            2022-07-06 13:59:10 (89.4 MB/s) - ‘/home/cloudshell-user/terraform.zip’ saved [19895510/19895510]
-            ```
-
-    2. Now that you have the compressed Terraform file, extract it and save the contents to `/home/cloudshell-user/.local/bin/` by running the following command:
-
-        ```bash
-        mkdir -p /home/cloudshell-user/.local/bin
-        unzip -d /home/cloudshell-user/.local/bin/ /home/cloudshell-user/terraform.zip
-        ```
-
-        !!! summary "Expected Result"
-
-            ```bash
-            Archive:  /home/cloudshell-user/terraform.zip
-              /home/cloudshell-user/.local/bin/terraform
-            ```
-
-    3. To make sure that the new binary will execute in the next challenge, you can run the following command which will output the version of the binary:
-
-        ```bash
-        terraform version
-        ```
-
-        !!! warning
-
-            You can ignore the "out of date version" message. Since Terraform is updated incredibly frequently, we cannot be certain the latest version will work properly to deploy your resources. This exercise was tested with Terraform version 1.2.4.
-
-        !!! summary "Expected Result"
-
-            ```bash
-            Terraform v1.2.4
-            on linux_amd64
-
-            Your version of Terraform is out of date! The latest version
-            is 1.2.5. You can update by downloading from https://www.terraform.io/downloads.html
-            ```
-
-### Challenge 4: Deploy Evidence App
-
-Finally, you have all of the components needed to deploy the application in your AWS account: the IaC and Terraform.
-
-Use Terraform to initialize and deploy the IaC. Afterwards, navigate to the website created by this IaC.
-
-??? cmd "Solution"
-
-    1. Before you can deploy resources defined in your Terraform `.tf` files, you must be in the current directory where those files reside. Navigate to `/home/cloudshell-user/evidence-app` and ensure your `.tf` files are present.
+    1. Before you can deploy resources using the `cloudformation-deploy.sh` script, you must be in the current directory where those files reside. Navigate to `/home/cloudshell-user/evidence-app`.
 
         ```bash
         cd /home/cloudshell-user/evidence-app
-        ls *.tf
+        pwd
         ```
 
         !!! summary "Expected Result"
 
             ```bash
-            api.tf  compute.tf  iam.tf  main.tf  outputs.tf  storage.tf  variables.tf
+            /home/cloudshell-user/evidence-app
             ```
 
-    2. The Terraform binary that you downloaded does not include all of the required binaries and libraries to deploy these resources. To do this as well as set up the Terraform directory structure, run the following command:
+    2. Run the `cloudformation-deploy.sh` script and, after roughly 5 minutes, you should see a URL for your evidence app.
 
         ```bash
-        terraform init
+        ./cloudformation-deploy.sh
         ```
 
-        !!! summary "Expected Result"
+        !!! summary "Sample Result"
 
             ```bash
-            Initializing the backend...
-
-            Initializing provider plugins...
-            - Finding hashicorp/aws versions matching "~> 4.17"...
-            - Finding latest version of hashicorp/time...
-            - Finding latest version of hashicorp/random...
-            - Finding latest version of hashicorp/archive...
-            - Installing hashicorp/random v3.3.2...
-            - Installed hashicorp/random v3.3.2 (signed by HashiCorp)
-            - Installing hashicorp/archive v2.2.0...
-            - Installed hashicorp/archive v2.2.0 (signed by HashiCorp)
-            - Installing hashicorp/aws v4.21.0...
-            - Installed hashicorp/aws v4.21.0 (signed by HashiCorp)
-            - Installing hashicorp/time v0.7.2...
-            - Installed hashicorp/time v0.7.2 (signed by HashiCorp)
-
-            Terraform has created a lock file .terraform.lock.hcl to record the provider
-            selections it made above. Include this file in your version control repository
-            so that Terraform can guarantee to make the same selections by default when
-            you run "terraform init" in the future.
-
-            Terraform has been successfully initialized!
-
-            You may now begin working with Terraform. Try running "terraform plan" to see
-            any changes that are required for your infrastructure. All Terraform commands
-            should now work.
-
-            If you ever set or change modules or backend configuration for Terraform,
-            rerun this command to reinitialize your working directory. If you forget, other
-            commands will detect it and remind you to do so if necessary.
+            Deploying CloudFormation Stack...
+            Creating DynamoDB entry...
+            Adding webcontent to S3...
+            Complete! Evidence-App URL: https://d2x6hc15286uu2.cloudfront.net
             ```
 
-    3. And now it's time to deploy. Run the following command and answer `yes` when prompted:
-
-        !!! note
-
-            This deployment will take roughly 5 minutes to complete. In fact, most resources take just seconds to deploy with the exception of the CloudFront distribution. This resource takes the bulk of the 5 minutes to deploy.
-
-        ```bash
-        terraform apply
-        ```
-
-        !!! warning
-
-            There is a rare timing issue that may impact your deployment. If you receive the following error, re-run the previous `terraform apply` command:
-
-            ```text
-            Error: Error creating CloudTrail: InsufficientS3BucketPolicyException
-            ```
-
-            In the VERY RARE case that didn't work, you may need to destroy and rebuild. You can do this using the following commands (answering `yes` to each):
-
-            ```bash
-            terraform destroy
-            ```
-
-            ```bash
-            terraform apply
-            ```
-
-        !!! summary "Expected Result"
-
-            ```bash
-            <snip>
-
-            Plan: 35 to add, 0 to change, 0 to destroy.
-
-            Changes to Outputs:
-              + website_url = (known after apply)
-
-            Do you want to perform these actions?
-              Terraform will perform the actions described above.
-              Only 'yes' will be accepted to approve.
-
-              Enter a value: yes
-
-            <snip>
-
-            aws_s3_object.js_file: Creating...
-            aws_s3_object.index_file: Creating...
-            aws_s3_object.index_file: Creation complete after 0s [id=index.html]
-            aws_s3_object.js_file: Creation complete after 0s [id=script.js]
-
-            Apply complete! Resources: 35 added, 0 changed, 0 destroyed.
-
-            Outputs:
-
-            website_url = "https://d1dw3pytnie47k.cloudfront.net"
-            ```
-
-    4. If you notice the last line of the output, this is the **URL** of the **evidence-app** that you will be testing. Isn't that nice of the developers to make this URL easy to find? Navigate to this URL in another browser tab to see what we are dealing with.
+    3. If you notice the last line of the output, this is the **URL** of the **evidence-app** that you will be testing. Isn't that nice of the developers to make this URL easy to find? Navigate to this URL in another browser tab to see what we are dealing with.
 
         ![](../img/exercise1/8.png ""){: class="w600" }
 
-    5. The application that you are looking is described in the source code repository's [README.md](https://github.com/bluemountaincyber/evidence-app/blob/main/README.md) file.
+    4. The application that you are looking is described in the source code repository's [README.md](https://github.com/bluemountaincyber/evidence-app/blob/main/README.md) file.
     
         !!! quote "README.md excerpt"
         

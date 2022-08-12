@@ -4,7 +4,7 @@
 
 ## Objectives
 
-* Tear down **evidence-app** resources using `terraform`
+* Tear down **evidence-app** resources using `cloudformation-teardown.sh`
 * (Optional) Reset **CloudShell** home directory contents
 
 ## Challenges
@@ -19,21 +19,18 @@ Log back into your **CloudShell** session and use `terraform` to destroy the **e
 
         ```bash
         cd /home/cloudshell-user/evidence-app
-        terraform destroy -auto-approve
+        ./cloudformation-teardown.sh
         ```
 
         !!! summary "Expected Results"
 
             ```bash
-            <snip>
-
-            aws_cloudfront_origin_access_identity.evidence-oai: Destruction complete after 1s
-            aws_s3_bucket.aws-logs: Destruction complete after 1s
-            random_string.s3_suffix: Destroying... [id=pbk4g30a3h7nghii]
-            random_string.s3_suffix: Destruction complete after 0s
-            aws_apigatewayv2_api.evidence_gw: Destruction complete after 1s
-
-            Destroy complete! Resources: 37 destroyed.
+            Removing webcode_final directory...
+            Emptying S3 buckets (1 of 2)...
+            Tearing down CloudFormation Stack (1 of 2)...
+            Emptying S3 buckets (2 of 2)...
+            Tearing down CloudFormation Stack (2 of 2)...
+            Teardown complete!
             ```
 
 ### Challenge 2: (Optional) Reset CloudShell Home Directory

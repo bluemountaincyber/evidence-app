@@ -32,14 +32,14 @@ Upload any file from your local system you wish (as long as there are [no spaces
     1. If you closed the browser tab containing the evidence-app homepage, you can find the homepage URL by executing the following command in your **CloudShell** session:
 
         ```bash
-        cd /home/cloudshell-user/evidence-app
-        terraform output
+        aws cloudfront list-distributions | jq -r \
+          '.DistributionList.Items[] | select(.Comment == "evidence Website") | "https://" + .DomainName'
         ```
 
         !!! summary "Expected Result"
 
             ```bash
-            website_url = "https://d1dw3pytnie47k.cloudfront.net"
+            https://d2x6hc15286uu2.cloudfront.net
             ```
 
     2. Click on the **Choose File** button (1) and select a file of your choice (2).
@@ -73,7 +73,8 @@ Built into **CloudShell** is a tool that can do just that - `wget`. It's not fan
 
         ```bash
         cd /home/cloudshell-user/evidence-app
-        export TARGET=$(terraform output | cut -d '"' -f2)
+        export TARGET=$(aws cloudfront list-distributions | jq -r \
+          '.DistributionList.Items[] | select(.Comment == "evidence Website") | "https://" + .DomainName')
         echo "The target URL is: $TARGET"
         ```
 
