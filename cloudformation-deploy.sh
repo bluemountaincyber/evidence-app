@@ -23,7 +23,7 @@ sed -e "s@\${function_url}@$CFURL/api/@g" webcode_final/script.js.tpl > webcode_
 mv webcode_final/index.html.tpl webcode_final/index.html
 rm webcode_final/script.js.tpl
 WEBCODEBUCKET=$(aws s3 ls | egrep -o "webcode-[0-9]{12}")
-aws s3 sync webcode_final s3://$WEBCODEBUCKET >/dev/null
+aws s3 sync webcode_final s3://$WEBCODEBUCKET >/dev/null 2>/dev/null
 
 # Display CloudFront URL
 printf "\033[32mComplete! Evidence-App URL: \033[0m$CFURL\n"
