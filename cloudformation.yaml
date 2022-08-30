@@ -304,6 +304,7 @@ Resources:
               - !Sub 'arn:aws:s3:::${EVIDENCEBUCKET}/*'
           IncludeManagementEvents: True
           ReadWriteType: All
+      IncludeGlobalServiceEvents: True
       IsLogging: True
       IsMultiRegionTrail: True
       S3BucketName: !Ref AWSLOGSBUCKET
