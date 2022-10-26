@@ -51,8 +51,8 @@ style: |
 
 ![height:325px center](img/Cloud_Ace_Final.png)
 
-<p class=author>Ryan Nicholson</p>
-<p class=author-info>SEC488/SEC541 Author and Instructor</p>
+<p class=author>Ryan Nicholson | Blue Mountain Cyber, LLC</p>
+<p class=author-info>SEC488/SEC541 Author and SANS Certified Instructor</p>
 
 ---
 

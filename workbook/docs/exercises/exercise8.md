@@ -11,7 +11,7 @@
 
 ### Challenge 1: Tear Down With Terraform
 
-Log back into your **CloudShell** session and use `terraform` to destroy the **evidence-app** resources.
+Log back into your **CloudShell** session and use `cloudformation-teardown.sh` to destroy the **evidence-app** resources.
 
 ??? cmd "Solution"
 
